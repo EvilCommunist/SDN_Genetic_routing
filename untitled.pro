@@ -18,11 +18,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    networkview.cpp
+    UI_tools/networkview.cpp
 
 HEADERS += \
     mainwindow.h \
-    networkview.h
+    UI_tools/networkview.h
 
 FORMS += \
     mainwindow.ui

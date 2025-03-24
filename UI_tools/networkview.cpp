@@ -27,12 +27,12 @@ void NetworkView::mousePressEvent(QMouseEvent *event)
         emit signalMouseLeftButtonPressed(event->pos());
     }
 }
-
+/*
 void NetworkView::mouseMoveEvent(QMouseEvent *event)
 {
     emit signalMouseMoved(event->pos());
 }
-
+*/
 void NetworkView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if (event->button() & Qt::LeftButton)
