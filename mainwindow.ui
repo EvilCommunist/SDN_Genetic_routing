@@ -37,41 +37,21 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>591</width>
-          <height>271</height>
+          <width>2000</width>
+          <height>2000</height>
          </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>2000</width>
+          <height>2000</height>
+         </size>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color:white</string>
         </property>
         <property name="text">
          <string/>
-        </property>
-       </widget>
-       <widget class="QScrollBar" name="horizontalScrollBar">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>520</y>
-          <width>1091</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-       <widget class="QScrollBar" name="verticalScrollBar">
-        <property name="geometry">
-         <rect>
-          <x>1080</x>
-          <y>-1</y>
-          <width>20</width>
-          <height>541</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </widget>
