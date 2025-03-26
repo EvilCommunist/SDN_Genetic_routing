@@ -13,20 +13,18 @@ DEPENDPATH += $$PWD \
 
 
 SOURCES += \
-    UI_tools/linkParamethers.cpp \
+    UI_tools/linkparamdialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    UI_tools/networkview.cpp \
-    UI_tools/linkParamethers.cpp
+    UI_tools/networkview.cpp
 
 HEADERS += \
-    UI_tools/linkParamethers.h \
+    UI_tools/linkparamdialog.h \
     mainwindow.h \
-    UI_tools/networkview.h \
-    UI_tools/linkParamethers.h
+    UI_tools/networkview.h
 
 FORMS += \
-    linkParamethers.ui \
+    UI_tools/linkparamdialog.ui \
     mainwindow.ui
 
 win32 {
