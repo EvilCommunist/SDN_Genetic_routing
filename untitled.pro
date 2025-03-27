@@ -14,12 +14,15 @@ DEPENDPATH += $$PWD \
 
 SOURCES += \
     UI_tools/linkparamdialog.cpp \
+    Netw_elems/base/anydevice.cpp \
     main.cpp \
     mainwindow.cpp \
     UI_tools/networkview.cpp
 
 HEADERS += \
+    Netw_elems/base/devices.h \
     UI_tools/linkparamdialog.h \
+    Netw_elems/base/anydevice.h \
     mainwindow.h \
     UI_tools/networkview.h
 
