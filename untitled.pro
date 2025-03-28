@@ -13,6 +13,7 @@ DEPENDPATH += $$PWD \
 
 
 SOURCES += \
+    Netw_elems/base/netnode.cpp \
     UI_tools/linkparamdialog.cpp \
     Netw_elems/base/anydevice.cpp \
     main.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     Netw_elems/base/devices.h \
+    Netw_elems/base/netnode.h \
     UI_tools/linkparamdialog.h \
     Netw_elems/base/anydevice.h \
     mainwindow.h \

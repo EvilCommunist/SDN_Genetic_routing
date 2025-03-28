@@ -18,13 +18,13 @@ private:
 protected:
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
-    //virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
     void signalMouseLeftButtonReleased(QPoint cursorPosition);
     void signalMouseLeftButtonPressed(QPoint cursorPosition);
-    //void signalMouseMoved(QPoint cursorPosition);
+    void signalMouseMoved(QPoint cursorPosition);
     void signalMouseDoubleClicked(QPoint cursorPosition);
 };
 
