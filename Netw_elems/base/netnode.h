@@ -15,7 +15,7 @@ public:
     NetNode();
     virtual QPoint getPos() const;
     virtual void setPos(QPoint pos);
-    //virtual void configure();
+    virtual void configure()=0;
     virtual void select();
     virtual void removeSelection();
     virtual QString getName();

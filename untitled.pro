@@ -14,6 +14,9 @@ DEPENDPATH += $$PWD \
 
 SOURCES += \
     Netw_elems/base/netnode.cpp \
+    Netw_elems/host.cpp \
+    UI_tools/controllerdialog.cpp \
+    UI_tools/hostdialog.cpp \
     UI_tools/linkparamdialog.cpp \
     Netw_elems/base/anydevice.cpp \
     main.cpp \
@@ -23,14 +26,23 @@ SOURCES += \
 HEADERS += \
     Netw_elems/base/devices.h \
     Netw_elems/base/netnode.h \
+    Netw_elems/host.h \
+    UI_tools/controllerdialog.h \
+    UI_tools/hostdialog.h \
     UI_tools/linkparamdialog.h \
     Netw_elems/base/anydevice.h \
     mainwindow.h \
     UI_tools/networkview.h
 
 FORMS += \
+    UI_tools/controllerdialog.ui \
+    UI_tools/hostdialog.ui \
     UI_tools/linkparamdialog.ui \
     mainwindow.ui
+
+
+RESOURCES += imgs/img.qrc
+
 
 win32 {
     CONFIG += console

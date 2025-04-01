@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/imgs">
+        <file>host.png</file>
+        <file>switch.png</file>
+        <file>controller.png</file>
+    </qresource>
+</RCC>
