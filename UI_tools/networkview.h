@@ -1,31 +1,13 @@
-#ifndef NETWORKVIEW_H
-#define NETWORKVIEW_H
+#include <QGraphicsView>
 
-#include<QLabel>
-#include<QMouseEvent>
-
-
-class NetworkView : public QLabel
-{
+class NetworkView : public QGraphicsView {
     Q_OBJECT
 public:
-    explicit NetworkView(QWidget *parent = 0);
-    void refresh(QPixmap);
+    explicit NetworkView(QWidget *parent = nullptr);
+    void addHost(const QPointF& pos);
+    void addSwitch(const QPointF& pos);
+    void connectItems(QGraphicsItem* a, QGraphicsItem* b);
 
 private:
-    void initialize();
-
-protected:
-    virtual void mouseReleaseEvent(QMouseEvent *event);
-    virtual void mousePressEvent(QMouseEvent *event);
-    virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void mouseDoubleClickEvent(QMouseEvent *event);
-
-signals:
-    void signalMouseLeftButtonReleased(QPoint cursorPosition);
-    void signalMouseLeftButtonPressed(QPoint cursorPosition);
-    void signalMouseMoved(QPoint cursorPosition);
-    void signalMouseDoubleClicked(QPoint cursorPosition);
+    QGraphicsScene *scene;
 };
-
-#endif // NETWORKVIEW_H

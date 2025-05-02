@@ -1,12 +1,26 @@
 #include "netnode.h"
 
-NetNode::NetNode(){}
+NetNode::NetNode(DeviceType type, QGraphicsItem *parent)
+    : QGraphicsItem(parent),
+      deviceType(type),
+      size(70, 70){
+    setFlag(QGraphicsItem::ItemIsMovable);
+    setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+}
 
-void NetNode::setPos(QPoint pos){this->pos = pos;}
-QPoint NetNode::getPos() const{return this->pos;}
+QRectF NetNode::boundingRect() const{
+    return QRectF(0, 0, size.width(), size.height());
+}
 
-void NetNode::select(){this->isSelected=true;}
-void NetNode::removeSelection(){this->isSelected=false;}
+QVariant NetNode::itemChange(GraphicsItemChange change, const QVariant &value){
+    if (change == ItemPositionChange && scene()) {
+        QPointF newPos = value.toPointF();
+        return newPos;
+    }
+    return QGraphicsItem::itemChange(change, value);
+}
 
-void NetNode::setName(QString name){this->name = name;}
-QString NetNode::getName(){return this->name;}
+DeviceType NetNode::getDeviceType() const{return deviceType;}
+QString NetNode::getName() const{return name;}
+void NetNode::setName (const QString &name) {this->name=name; update();}

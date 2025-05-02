@@ -1,31 +1,40 @@
 #include "host.h"
-#include"hostdialog.h"
+#include "hostdialog.h"
+#include <QStyleOptionGraphicsItem>
 
-Host::Host(QPoint pos){
-    removeSelection();
-    setPos(pos);
+Host::Host(QPoint position, int number, QGraphicsItem *parent)
+    : NetNode(DeviceType::HOST, parent){
+    setName(QString("h%0").arg(number));
+    setIpAddr(QString("10.0.0.%0").arg(number));
+    setMacAddr(QString("00:00:00:00:00:%0").arg(number, 2, 10, QChar('0')));
+
+    setPos(position);
 }
-Host::~Host(){}
 
-void Host::setIpAddr(QString ip){this->ipAddr=ip;}
-QString Host::getIpAddr()const{return this->ipAddr;}
+QRectF Host::boundingRect() const{
+    return QRectF(0, 0, 70, 70);
+}
 
-void Host::setMacAddr(QString mac){this->macAddr=mac;}
-QString Host::getMacAddr()const{return this->macAddr;}
-
-DeviceType Host::getDeviceType(){return HOST;}
+void Host::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    Q_UNUSED(widget);
+    if (option->state & QStyle::State_Selected) {
+        painter->setPen(QPen(Qt::black, 1, Qt::DashLine));
+        painter->drawRect(boundingRect().adjusted(-2, -2, 2, 2));
+    }
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::lightGray);
+    painter->drawRect(boundingRect());
+    painter->drawText(boundingRect(), Qt::AlignCenter, getName());
+}
 
 void Host::configure(){
     HostDialog dialog(this);
-    dialog.exec();
+    if (dialog.exec() == QDialog::Accepted) {
+        update();
+    }
 }
 
-void Host::create(int num){
-    setName(QString("h%0").arg(num));
-    setIpAddr(QString("10.0.0.%0").arg(num));
-    setMacAddr(QString("00:00:00:00:00:%0").arg(num, 2, 10, QChar('0')));
-}
-
-// TODO:
-void Host::draw(/*NetworkMapDrawer *drawer*/){/*do drawings*/}
-QSize Host::getSize()const{return QSize();/*do somethings*/}
+QString Host::getMacAddr() const { return macAddr; }
+void Host::setMacAddr(const QString &mac){ macAddr = mac; update(); }
+QString Host::getIpAddr() const { return ipAddr; }
+void Host::setIpAddr(const QString &ip) { ipAddr = ip; update(); }

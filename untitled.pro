@@ -18,7 +18,6 @@ SOURCES += \
     UI_tools/controllerdialog.cpp \
     UI_tools/hostdialog.cpp \
     UI_tools/linkparamdialog.cpp \
-    Netw_elems/base/anydevice.cpp \
     main.cpp \
     mainwindow.cpp \
     UI_tools/networkview.cpp
@@ -30,7 +29,6 @@ HEADERS += \
     UI_tools/controllerdialog.h \
     UI_tools/hostdialog.h \
     UI_tools/linkparamdialog.h \
-    Netw_elems/base/anydevice.h \
     mainwindow.h \
     UI_tools/networkview.h
 
