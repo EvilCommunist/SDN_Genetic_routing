@@ -1,5 +1,7 @@
 #include "host.h"
 #include "hostdialog.h"
+#include <QPainter>
+#include <QPixmap>
 #include <QStyleOptionGraphicsItem>
 
 Host::Host(QPoint position, int number, QGraphicsItem *parent)
@@ -17,14 +19,17 @@ QRectF Host::boundingRect() const{
 
 void Host::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     Q_UNUSED(widget);
-    if (option->state & QStyle::State_Selected) {
-        painter->setPen(QPen(Qt::black, 1, Qt::DashLine));
-        painter->drawRect(boundingRect().adjusted(-2, -2, 2, 2));
-    }
-    painter->setPen(Qt::black);
-    painter->setBrush(Qt::lightGray);
-    painter->drawRect(boundingRect());
-    painter->drawText(boundingRect(), Qt::AlignCenter, getName());
+        QPixmap pixmap(":/imgs/host.png");
+        pixmap = pixmap.scaled(boundingRect().size().toSize(),
+                              Qt::KeepAspectRatio,
+                              Qt::SmoothTransformation);
+        painter->drawPixmap(boundingRect().topLeft(), pixmap);
+        if (option->state & QStyle::State_Selected) {
+            painter->setPen(QPen(Qt::blue, 2, Qt::DashLine));
+            painter->drawRect(boundingRect().adjusted(-2, -2, 2, 2));
+        }
+        painter->setPen(Qt::black);
+        painter->drawText(boundingRect(), Qt::AlignBottom | Qt::AlignHCenter, getName());
 }
 
 void Host::configure(){
