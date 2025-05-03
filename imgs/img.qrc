@@ -3,5 +3,7 @@
         <file>host.png</file>
         <file>switch.png</file>
         <file>controller.png</file>
+        <file>link.png</file>
+        <file>edit.png</file>
     </qresource>
 </RCC>
