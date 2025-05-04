@@ -1,13 +1,31 @@
-#include <QGraphicsView>
+#ifndef NETWORKVIEW_H
+#define NETWORKVIEW_H
 
-class NetworkView : public QGraphicsView {
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include "Netw_elems/base/devices.h"
+#include "Netw_elems/host.h"
+
+class NetworkView : public QGraphicsView
+{
     Q_OBJECT
+
 public:
     explicit NetworkView(QWidget *parent = nullptr);
-    void addHost(const QPointF& pos);
-    void addSwitch(const QPointF& pos);
-    void connectItems(QGraphicsItem* a, QGraphicsItem* b);
+    ~NetworkView() = default;
+
+public slots:
+    void setHostMode();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
     QGraphicsScene *scene;
+    DeviceType currentMode;
+    int hostCounter = 0;
+
+    void createHost(const QPointF &pos);
 };
+
+#endif // NETWORKVIEW_H

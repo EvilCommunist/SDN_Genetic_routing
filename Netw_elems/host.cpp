@@ -20,16 +20,14 @@ QRectF Host::boundingRect() const{
 void Host::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     Q_UNUSED(widget);
         QPixmap pixmap(":/imgs/host.png");
-        pixmap = pixmap.scaled(boundingRect().size().toSize(),
-                              Qt::KeepAspectRatio,
-                              Qt::SmoothTransformation);
-        painter->drawPixmap(boundingRect().topLeft(), pixmap);
+        pixmap = pixmap.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            painter->drawPixmap(-32, -32, pixmap);
         if (option->state & QStyle::State_Selected) {
             painter->setPen(QPen(Qt::blue, 2, Qt::DashLine));
             painter->drawRect(boundingRect().adjusted(-2, -2, 2, 2));
         }
         painter->setPen(Qt::black);
-        painter->drawText(boundingRect(), Qt::AlignBottom | Qt::AlignHCenter, getName());
+        painter->drawText(boundingRect(), Qt::AlignCenter, getName());
 }
 
 void Host::configure(){

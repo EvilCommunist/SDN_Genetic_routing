@@ -90,7 +90,9 @@
     <addaction name="actionController"/>
     <addaction name="actionSwitch"/>
     <addaction name="actionHost"/>
-    <addaction name="actionHost_2"/>
+    <addaction name="actionLink"/>
+    <addaction name="separator"/>
+    <addaction name="actionEdit"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
@@ -175,7 +177,7 @@
     <string>Host</string>
    </property>
   </action>
-  <action name="actionHost_2">
+  <action name="actionLink">
    <property name="text">
     <string>Link</string>
    </property>
@@ -218,6 +220,11 @@
   <action name="actionImport">
    <property name="text">
     <string>Import</string>
+   </property>
+  </action>
+  <action name="actionEdit">
+   <property name="text">
+    <string>Edit</string>
    </property>
   </action>
  </widget>

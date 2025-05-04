@@ -1,12 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtWidgets>
+#include<QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    networkView = ui->networkView;
+
+    connect(ui->actionHost, &QAction::triggered,
+            networkView, &NetworkView::setHostMode);
     topologyTools();
 }
 
@@ -16,25 +21,44 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::topologyTools(){
-    toolsGroup = new QActionGroup(this);
-    toolBar = new QToolBar("toolBar");
-    toolBar->setIconSize(QSize(64,64));
-    actionController = toolBar->addAction(QPixmap(":imgs/controller.png"), "Controller (C)", this, SLOT(on_actionController_triggered()));
-    actionController->setCheckable(true);
-    toolsGroup->addAction(actionController);
-    actionSwitch = toolBar->addAction(QPixmap(":imgs/switch.png"), "Switch (S)", this, SLOT(on_actionSwitch_triggered()));
-    actionSwitch->setCheckable(true);
-    toolsGroup->addAction(actionSwitch);
-    actionHost = toolBar->addAction(QPixmap(":imgs/host.png"), "Host (H)", this, SLOT(on_actionHost_triggered()));
-    actionHost->setCheckable(true);
-    toolsGroup->addAction(actionHost);
-    actionLink = toolBar->addAction(QPixmap(":imgs/link.png"), "Link (L)", this, SLOT(on_actionLink_triggered()));
-    actionLink->setCheckable(true);
-    toolsGroup->addAction(actionLink);
-    toolBar->addSeparator();
-    actionEdit = toolBar->addAction(QPixmap(":imgs/edit.png"), "Edit (E)", this, SLOT(on_actionEdit_triggered()));
-    actionEdit->setCheckable(true);
-    actionEdit->setChecked(true);
-    toolsGroup->addAction(actionEdit);
-    addToolBar(Qt::LeftToolBarArea, toolBar);
+    ui->actionHost->setIcon(QIcon(":/imgs/host.png"));
+    ui->actionSwitch->setIcon(QIcon(":/imgs/switch.png"));
+    ui->actionController->setIcon(QIcon(":/imgs/controller.png"));
+    ui->actionLink->setIcon(QIcon(":/imgs/link.png"));
+    ui->actionEdit->setIcon(QIcon(":/imgs/edit.png"));
+
+    QToolBar *topologyToolBar = new QToolBar("Topology Builder");
+    topologyToolBar->setIconSize(QSize(64, 64));
+    topologyToolBar->addAction(ui->actionController);
+    topologyToolBar->addAction(ui->actionSwitch);
+    topologyToolBar->addAction(ui->actionHost);
+    topologyToolBar->addAction(ui->actionLink);
+    topologyToolBar->addSeparator();
+    topologyToolBar->addAction(ui->actionEdit);
+    addToolBar(Qt::LeftToolBarArea,topologyToolBar);;
+}
+
+void MainWindow::on_actionController_triggered()
+{
+    emit signalPrepareController();
+}
+
+void MainWindow::on_actionHost_triggered()
+{
+    emit signalPrepareHost();
+}
+
+void MainWindow::on_actionSwitch_triggered()
+{
+    emit signalPrepareSwitch();
+}
+
+void MainWindow::on_actionLink_triggered()
+{
+    emit signalPrepareLink();
+}
+
+void MainWindow::on_actionEdit_triggered()
+{
+    emit signalChangeStateToEdit();
 }

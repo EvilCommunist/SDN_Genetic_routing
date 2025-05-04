@@ -6,7 +6,7 @@ enum DeviceType{
     HOST,
     StoSLINK,
     StoHLINK,
-    TXTLABEL
+    EDIT
 };
 
 #endif // DEVICES_H

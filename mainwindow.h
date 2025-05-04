@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QActionGroup>
+#include "UI_tools/networkview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,8 +17,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_actionController_triggered();
+    void on_actionHost_triggered();
+    void on_actionSwitch_triggered();
+    void on_actionLink_triggered();
+    void on_actionEdit_triggered();
+
 private:
     Ui::MainWindow *ui;
+    NetworkView *networkView;
     QActionGroup *metricGroupInMenu;
     QActionGroup *toolsGroupInMenu;
     QActionGroup *instrumentGroupInMenu;
@@ -27,12 +36,17 @@ private:
     QAction *actionSwitch;
     QAction *actionLink;
     QAction *actionEdit;
-    QAction *actionText;
     QString openedFilePath;
 
     QToolBar *toolBar;
-    QToolBar *utilitiesToolBar;
 
     void topologyTools();
+
+signals:
+    void signalPrepareController();
+    void signalPrepareHost();
+    void signalPrepareSwitch();
+    void signalPrepareLink();
+    void signalChangeStateToEdit();
 };
 #endif // MAINWINDOW_H
