@@ -23,6 +23,8 @@ public:
 private:
     QString macAddr;
     QString ipAddr;
+    static constexpr qreal SIZE = 64.0;
+    static constexpr qreal PADDING = 3.0;
 };
 
 #endif // HOST_H

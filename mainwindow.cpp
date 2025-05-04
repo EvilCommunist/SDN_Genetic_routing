@@ -12,6 +12,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionHost, &QAction::triggered,
             networkView, &NetworkView::setHostMode);
+    connect(ui->actionController, &QAction::triggered,
+            networkView, &NetworkView::setControllerMode);
+    connect(ui->actionSwitch, &QAction::triggered,
+            networkView, &NetworkView::setSwitchMode);
+    connect(ui->actionEdit, &QAction::triggered,
+            networkView, &NetworkView::setEditMode);
+
     topologyTools();
 }
 

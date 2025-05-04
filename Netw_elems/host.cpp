@@ -14,20 +14,21 @@ Host::Host(QPoint position, int number, QGraphicsItem *parent)
 }
 
 QRectF Host::boundingRect() const{
-    return QRectF(0, 0, 70, 70);
+    return QRectF(-SIZE/2 - PADDING, -SIZE/2 - PADDING,
+                 SIZE + 2*PADDING, SIZE + 2*PADDING);
 }
 
 void Host::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
     Q_UNUSED(widget);
         QPixmap pixmap(":/imgs/host.png");
-        pixmap = pixmap.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            painter->drawPixmap(-32, -32, pixmap);
+        painter->drawPixmap(-SIZE/2, -SIZE/2, SIZE, SIZE, pixmap);
         if (option->state & QStyle::State_Selected) {
             painter->setPen(QPen(Qt::blue, 2, Qt::DashLine));
-            painter->drawRect(boundingRect().adjusted(-2, -2, 2, 2));
+            painter->drawRect(boundingRect());
         }
         painter->setPen(Qt::black);
-        painter->drawText(boundingRect(), Qt::AlignCenter, getName());
+        QRectF textRect(-SIZE/2, SIZE/2 + 5, SIZE, 20);
+        painter->drawText(textRect, Qt::AlignCenter, getName());
 }
 
 void Host::configure(){
