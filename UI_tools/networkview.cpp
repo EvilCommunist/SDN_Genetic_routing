@@ -54,16 +54,19 @@ void NetworkView::mousePressEvent(QMouseEvent *event)
         case DeviceType::SWITCH:
             createSwitch(scenePos);
             return;
-        case DeviceType::EDIT:
-            if (event->type() == QEvent::MouseButtonDblClick) {
-                editSelectedItem();
-            }
-            break;
         default:
             break;
         }
     }
     QGraphicsView::mousePressEvent(event);
+}
+void NetworkView::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if (currentMode == DeviceType::EDIT && event->button() == Qt::LeftButton) {
+        editSelectedItem();
+        return;
+    }
+    QGraphicsView::mouseDoubleClickEvent(event);
 }
 
 void NetworkView::setupNetworkElement(QGraphicsItem *item)
