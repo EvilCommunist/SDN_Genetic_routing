@@ -13,9 +13,11 @@ DEPENDPATH += $$PWD \
 
 
 SOURCES += \
+    Netw_elems/base/netlink.cpp \
     Netw_elems/base/netnode.cpp \
     Netw_elems/controller.cpp \
     Netw_elems/host.cpp \
+    Netw_elems/sslink.cpp \
     Netw_elems/switch.cpp \
     UI_tools/controllerdialog.cpp \
     UI_tools/hostdialog.cpp \
@@ -26,9 +28,11 @@ SOURCES += \
 
 HEADERS += \
     Netw_elems/base/devices.h \
+    Netw_elems/base/netlink.h \
     Netw_elems/base/netnode.h \
     Netw_elems/controller.h \
     Netw_elems/host.h \
+    Netw_elems/sslink.h \
     Netw_elems/switch.h \
     UI_tools/controllerdialog.h \
     UI_tools/hostdialog.h \

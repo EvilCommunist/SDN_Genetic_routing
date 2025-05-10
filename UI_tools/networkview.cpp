@@ -32,6 +32,13 @@ void NetworkView::setSwitchMode()
     setDragMode(QGraphicsView::NoDrag);
     setCursor(Qt::PointingHandCursor);
 }
+void NetworkView::setLinkMode()
+{
+    currentMode = DeviceType::StoSLINK;
+    setDragMode(QGraphicsView::NoDrag);
+    setCursor(Qt::CrossCursor);
+    firstLinkNode = nullptr;
+}
 void NetworkView::setEditMode()
 {
     currentMode = DeviceType::EDIT;
@@ -43,6 +50,7 @@ void NetworkView::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         QPointF scenePos = mapToScene(event->pos());
+        QGraphicsItem *item = scene->itemAt(scenePos, QTransform());
 
         switch(currentMode) {
         case DeviceType::HOST:
@@ -54,11 +62,31 @@ void NetworkView::mousePressEvent(QMouseEvent *event)
         case DeviceType::SWITCH:
             createSwitch(scenePos);
             return;
+        case DeviceType::StoSLINK:
+            if (item) {
+                if (auto node = dynamic_cast<NetNode*>(item)) {
+                    if (!firstLinkNode) {
+                        firstLinkNode = node;
+                        node->setSelected(true);
+                    }else if(firstLinkNode != node){
+                        createLink(firstLinkNode, node);
+                        resetLinkMode();
+                    }
+                }
+            }
+            return;
         default:
             break;
         }
     }
     QGraphicsView::mousePressEvent(event);
+}
+void NetworkView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton && currentMode == DeviceType::StoSLINK) {
+        resetLinkMode();
+    }
+    QGraphicsView::mouseReleaseEvent(event);
 }
 void NetworkView::mouseDoubleClickEvent(QMouseEvent *event)
 {
@@ -95,6 +123,23 @@ void NetworkView::createSwitch(const QPointF &pos)
     setupNetworkElement(sw);
     scene->addItem(sw);
 }
+void NetworkView::createLink(NetNode *from, NetNode *to)
+{
+    if (from->getDeviceType() == DeviceType::SWITCH &&
+        to->getDeviceType() == DeviceType::SWITCH) {
+
+        SSLink *link = new SSLink(from, to);
+        scene->addItem(link);
+    }
+}
+void NetworkView::resetLinkMode()
+{
+    if (firstLinkNode) {
+        firstLinkNode->setSelected(false);
+        firstLinkNode = nullptr;
+    }
+    setCursor(Qt::CrossCursor);
+}
 
 void NetworkView::editSelectedItem()
 {
@@ -110,6 +155,9 @@ void NetworkView::editSelectedItem()
     }
     else if (auto switchItem = dynamic_cast<Switch*>(selectedItem)) {
         switchItem->configure();
+    }
+    else if (auto link = dynamic_cast<SSLink*>(selectedItem)) {
+        link->configure();
     }
 }
 

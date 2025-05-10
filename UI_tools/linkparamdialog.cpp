@@ -1,14 +1,14 @@
 #include "linkparamdialog.h"
 #include "ui_linkparamdialog.h"
 
-linkParamDialog::linkParamDialog(QWidget *parent) :
+linkParamDialog::linkParamDialog(SSLink*, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::linkParamDialog)
+    ui(new Ui::linkParamDialog),
+    link(link)
 {
     ui->setupUi(this);
 }
 
-linkParamDialog::~linkParamDialog()
-{
-    delete ui;
-}
+SSLink* linkParamDialog::getLink(){return link;}
+
+linkParamDialog::~linkParamDialog(){delete ui;}
