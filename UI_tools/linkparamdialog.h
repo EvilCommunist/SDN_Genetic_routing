@@ -2,7 +2,7 @@
 #define LINKPARAMDIALOG_H
 
 #include <QDialog>
-#include "../Netw_elems/sslink.h"
+#include "../Netw_elems/base/netlink.h"
 
 namespace Ui {
 class linkParamDialog;
@@ -13,13 +13,13 @@ class linkParamDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit linkParamDialog(SSLink*, QWidget *parent = 0);
+    explicit linkParamDialog(NetLink*, QWidget *parent = 0);
     ~linkParamDialog();
-    SSLink* getLink();
+    NetLink* getLink();
 
 private:
     Ui::linkParamDialog *ui;
-    SSLink* link;
+    NetLink* link;
 };
 
 #endif // LINKPARAMDIALOG_H

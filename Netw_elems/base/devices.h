@@ -4,8 +4,10 @@ enum DeviceType{
     CONTROLLER,
     SWITCH,
     HOST,
+    LINK,
     StoSLINK,
     StoHLINK,
+    CtoSLINK,
     EDIT
 };
 

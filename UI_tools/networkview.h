@@ -8,6 +8,8 @@
 #include "Netw_elems/controller.h"
 #include "Netw_elems/switch.h"
 #include "Netw_elems/sslink.h"
+#include "Netw_elems/hslink.h"
+#include "Netw_elems/ctoslink.h"
 
 class NetworkView : public QGraphicsView
 {
@@ -45,6 +47,10 @@ private:
     void setupNetworkElement(QGraphicsItem *item);
     void editSelectedItem();
     void resetLinkMode();
+
+    void renumberHosts();
+    void renumberControllers();
+    void renumberSwitches();
 };
 
 #endif // NETWORKVIEW_H

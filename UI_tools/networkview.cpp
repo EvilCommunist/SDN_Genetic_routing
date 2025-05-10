@@ -34,7 +34,7 @@ void NetworkView::setSwitchMode()
 }
 void NetworkView::setLinkMode()
 {
-    currentMode = DeviceType::StoSLINK;
+    currentMode = DeviceType::LINK;
     setDragMode(QGraphicsView::NoDrag);
     setCursor(Qt::CrossCursor);
     firstLinkNode = nullptr;
@@ -87,14 +87,25 @@ void NetworkView::mousePressEvent(QMouseEvent *event)
         case DeviceType::SWITCH:
             createSwitch(scenePos);
             return;
-        case DeviceType::StoSLINK:
+        case DeviceType::LINK:
             if (item) {
                 if (auto node = dynamic_cast<NetNode*>(item)) {
                     if (!firstLinkNode) {
-                        firstLinkNode = node;
-                        node->setSelected(true);
-                    }else if(firstLinkNode != node){
-                        createLink(firstLinkNode, node);
+                        if (node->getDeviceType() == DeviceType::SWITCH ||
+                            node->getDeviceType() == DeviceType::HOST ||
+                            node->getDeviceType() == DeviceType::CONTROLLER) {
+                            firstLinkNode = node;
+                            node->setSelected(true);
+                        }
+                    } else if (firstLinkNode != node) {
+                        bool connectable = (firstLinkNode->getDeviceType() == DeviceType::SWITCH && node->getDeviceType() == DeviceType::SWITCH) ||
+                                           (firstLinkNode->getDeviceType() == DeviceType::HOST && node->getDeviceType() == DeviceType::SWITCH) ||
+                                           (firstLinkNode->getDeviceType() == DeviceType::SWITCH && node->getDeviceType() == DeviceType::HOST)||
+                                           (firstLinkNode->getDeviceType() == DeviceType::CONTROLLER && node->getDeviceType() == DeviceType::SWITCH)||
+                                           (firstLinkNode->getDeviceType() == DeviceType::SWITCH && node->getDeviceType() == DeviceType::CONTROLLER);
+                        if (connectable) {
+                            createLink(firstLinkNode, node);
+                        }
                         resetLinkMode();
                     }
                 }
@@ -108,7 +119,7 @@ void NetworkView::mousePressEvent(QMouseEvent *event)
 }
 void NetworkView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::RightButton && currentMode == DeviceType::StoSLINK) {
+    if (event->button() == Qt::RightButton && (currentMode == DeviceType::StoSLINK || currentMode == DeviceType::StoHLINK || currentMode == DeviceType::LINK)) {
         resetLinkMode();
     }
     QGraphicsView::mouseReleaseEvent(event);
@@ -150,11 +161,29 @@ void NetworkView::createSwitch(const QPointF &pos)
 }
 void NetworkView::createLink(NetNode *from, NetNode *to)
 {
+    NetLink *link = nullptr;
+
     if (from->getDeviceType() == DeviceType::SWITCH &&
         to->getDeviceType() == DeviceType::SWITCH) {
+        link = new SSLink(from, to);
+    }
+    else if ((from->getDeviceType() == DeviceType::HOST &&
+              to->getDeviceType() == DeviceType::SWITCH) ||
+             (from->getDeviceType() == DeviceType::SWITCH &&
+              to->getDeviceType() == DeviceType::HOST)) {
+        link = new HSLink(from, to);
+    }
+    else if ((from->getDeviceType() == DeviceType::CONTROLLER &&
+              to->getDeviceType() == DeviceType::SWITCH) ||
+             (from->getDeviceType() == DeviceType::SWITCH &&
+              to->getDeviceType() == DeviceType::CONTROLLER)) {
+        link = new CSLink(from, to);
+    }
 
-        SSLink *link = new SSLink(from, to);
+    if (link) {
         scene->addItem(link);
+        from->addLink(link);
+        to->addLink(link);
     }
 }
 void NetworkView::resetLinkMode()
@@ -182,6 +211,9 @@ void NetworkView::editSelectedItem()
         switchItem->configure();
     }
     else if (auto link = dynamic_cast<SSLink*>(selectedItem)) {
+        link->configure();
+    }
+    else if (auto link = dynamic_cast<HSLink*>(selectedItem)) {
         link->configure();
     }
 }
