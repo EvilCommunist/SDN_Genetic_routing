@@ -5,6 +5,8 @@
 #include <QPainter>
 #include "devices.h"
 
+class NetLink;
+
 class NetNode : public QGraphicsItem
 {
 public:
@@ -17,12 +19,16 @@ public:
     QString getName() const;
     void setName(const QString &name);
     virtual void configure() = 0;
+    void addLink(NetLink* link);
+    void removeLink(NetLink* link);
+    void updateLinks();
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
     DeviceType deviceType;
     QString name;
     QSizeF size;
+    QList<NetLink*> links;
 };
 
 #endif // NETNODE_H

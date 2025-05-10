@@ -14,14 +14,14 @@ public:
     void configure() override;
     DeviceType getDeviceType() const override { return StoSLINK; }
 
-    float getBandwidth() const { return bandwidth; }
-    void setBandwidth(float bw) { bandwidth = bw; update(); }
+    float getBandwidth() const;
+    void setBandwidth(float bw);
 
-    float getDelay() const { return delay; }
-    void setDelay(float delay) { delay = delay; update(); }
+    float getDelay() const;
+    void setDelay(float delay);
 
-    float getPacketLoss() const { return packetLoss; }
-    void setPacketLoss(float loss) { packetLoss = loss; update(); }
+    float getPacketLoss() const;
+    void setPacketLoss(float loss);
 
     void setNormalState();
     void setSelectedState();

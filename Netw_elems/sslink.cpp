@@ -14,22 +14,7 @@ SSLink::SSLink(NetNode* node1, NetNode* node2, QGraphicsItem* parent)
 }
 
 void SSLink::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget){
-    QPen pen;
-
-    switch(state) {
-    case State::Selected:
-        pen = QPen(Qt::blue, 4);
-        break;
-    case State::InPath:
-    case State::InPaths:
-        pen = QPen(pathColor, 4, Qt::DashLine);
-        break;
-    default:
-        pen = QPen(Qt::black, 3);
-    }
-
-    painter->setPen(pen);
-    painter->drawPath(path);
+    NetLink::paint(painter, option, widget);
 
     if (option->state & QStyle::State_Selected) {
         QString metrics = QString("BW: %1 Mbps\nDelay: %2 ms\nLoss: %3%")
@@ -37,7 +22,8 @@ void SSLink::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 
         QFontMetrics fm(painter->font());
         QRect textRect = fm.boundingRect(QRect(), Qt::AlignCenter, metrics);
-        textRect.moveCenter(calculateCenter().toPoint());
+        QPointF center = (line().p1() + line().p2()) / 2;
+        textRect.moveCenter(center.toPoint());
 
         painter->setPen(Qt::black);
         painter->setBrush(Qt::white);
@@ -80,3 +66,12 @@ void SSLink::updateToolTip(){
     setToolTip(QString("SSLink\nBandwidth: %1 Mbps\nDelay: %2 ms\nPacket Loss: %3%")
               .arg(bandwidth).arg(delay).arg(packetLoss*100));
 }
+
+float SSLink::getBandwidth() const { return bandwidth; }
+void SSLink::setBandwidth(float bw) { bandwidth = bw; update(); }
+
+float SSLink::getDelay() const { return delay; }
+void SSLink::setDelay(float delay) { delay = delay; update(); }
+
+float SSLink::getPacketLoss() const { return packetLoss; }
+void SSLink::setPacketLoss(float loss) { packetLoss = loss; update(); }
