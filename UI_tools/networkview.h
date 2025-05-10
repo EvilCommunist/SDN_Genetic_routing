@@ -23,6 +23,7 @@ public slots:
     void setSwitchMode();
     void setLinkMode();
     void setEditMode();
+    void deleteSelectedItems();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

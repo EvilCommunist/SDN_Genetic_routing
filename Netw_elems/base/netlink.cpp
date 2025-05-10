@@ -16,8 +16,8 @@ NetLink::NetLink(NetNode* node1, NetNode* node2, QGraphicsItem* parent)
     updatePosition();
 }
 NetLink::~NetLink(){
-    if (node1) node1->removeLink(this);
-    if (node2) node2->removeLink(this);
+    if (node1!=nullptr) node1->removeLink(this);
+    if (node2!=nullptr) node2->removeLink(this);
 }
 
 void NetLink::updatePosition()

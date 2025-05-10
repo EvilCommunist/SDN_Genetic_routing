@@ -46,6 +46,31 @@ void NetworkView::setEditMode()
     setCursor(Qt::ArrowCursor);
 }
 
+void NetworkView::deleteSelectedItems()
+{
+    QList<QGraphicsItem*> selectedItems = scene->selectedItems();
+
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : allItems) {
+        if (auto link = dynamic_cast<NetLink*>(item)) {
+            NetNode* from = link->getNode1();
+            NetNode* to = link->getNode2();
+
+            if (selectedItems.contains(from) || selectedItems.contains(to)) {
+                scene->removeItem(link);
+                delete link;
+            }
+        }
+    }
+
+    for (QGraphicsItem* item : selectedItems) {
+        scene->removeItem(item);
+        delete item;
+    }
+
+    scene->update();
+}
+
 void NetworkView::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {

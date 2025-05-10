@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
             networkView, &NetworkView::setLinkMode);
     connect(ui->actionEdit, &QAction::triggered,
             networkView, &NetworkView::setEditMode);
+    connect(ui->actionDelete, &QAction::triggered,
+            networkView, &NetworkView::deleteSelectedItems);
 
     topologyTools();
 }

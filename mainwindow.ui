@@ -93,6 +93,7 @@
     <addaction name="actionLink"/>
     <addaction name="separator"/>
     <addaction name="actionEdit"/>
+    <addaction name="actionDelete"/>
    </widget>
    <widget class="QMenu" name="menuOptions">
     <property name="title">
@@ -225,6 +226,17 @@
   <action name="actionEdit">
    <property name="text">
     <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
    </property>
   </action>
  </widget>
