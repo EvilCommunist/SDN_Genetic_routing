@@ -13,6 +13,7 @@ DEPENDPATH += $$PWD \
 
 
 SOURCES += \
+    File_tools/jsonprocessor.cpp \
     Netw_elems/base/netlink.cpp \
     Netw_elems/base/netnode.cpp \
     Netw_elems/controller.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     UI_tools/networkview.cpp
 
 HEADERS += \
+    File_tools/jsonprocessor.h \
     Netw_elems/base/devices.h \
     Netw_elems/base/netlink.h \
     Netw_elems/base/netnode.h \
