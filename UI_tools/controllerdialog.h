@@ -13,13 +13,18 @@ class ControllerDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ControllerDialog(Controller* ,QWidget *parent = 0);
+    explicit ControllerDialog(Controller* controller, QWidget *parent = 0);
     ~ControllerDialog();
     Controller* getController();
 
 private:
     Ui::ControllerDialog *ui;
     Controller* controller;
+
+    void setControllerData();
+
+private slots:
+    virtual void accept();
 };
 
 #endif // CONTROLLERDIALOG_H

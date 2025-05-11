@@ -13,9 +13,14 @@ class HostDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit HostDialog(Host*, QWidget *parent = 0);
+    explicit HostDialog(Host* host, QWidget *parent = 0);
     ~HostDialog();
     Host* getHost();
+
+    void setHostData();
+
+private slots:
+    virtual void accept();
 
 private:
     Ui::HostDialog *ui;

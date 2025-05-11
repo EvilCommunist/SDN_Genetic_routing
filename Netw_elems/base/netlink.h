@@ -20,6 +20,13 @@ public:
     virtual void configure() = 0;
     virtual DeviceType getDeviceType() const = 0;
 
+    virtual float getBandwidth() const{}
+    virtual void setBandwidth(float bw) {}
+    virtual float getDelay() const {}
+    virtual void setDelay(float delay) {}
+    virtual float getPacketLoss() const {}
+    virtual void setPacketLoss(float loss) {}
+
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
     void updateLine();

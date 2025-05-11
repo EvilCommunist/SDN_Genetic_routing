@@ -71,7 +71,7 @@ float SSLink::getBandwidth() const { return bandwidth; }
 void SSLink::setBandwidth(float bw) { bandwidth = bw; update(); }
 
 float SSLink::getDelay() const { return delay; }
-void SSLink::setDelay(float delay) { delay = delay; update(); }
+void SSLink::setDelay(float delay) { this->delay = delay; update(); }
 
 float SSLink::getPacketLoss() const { return packetLoss; }
 void SSLink::setPacketLoss(float loss) { packetLoss = loss; update(); }

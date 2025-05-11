@@ -13,6 +13,8 @@ NetLink::NetLink(NetNode* node1, NetNode* node2, QGraphicsItem* parent)
     if (node1) node1->addLink(this);
     if (node2) node2->addLink(this);
 
+
+
     updatePosition();
 }
 NetLink::~NetLink(){
