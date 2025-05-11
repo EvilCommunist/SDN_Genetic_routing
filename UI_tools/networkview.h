@@ -51,6 +51,7 @@ private:
     void renumberHosts();
     void renumberControllers();
     void renumberSwitches();
+    void renumberAllNodes();
 };
 
 #endif // NETWORKVIEW_H

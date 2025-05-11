@@ -46,6 +46,60 @@ void NetworkView::setEditMode()
     setCursor(Qt::ArrowCursor);
 }
 
+void NetworkView::renumberHosts() {
+    int counter = 0, curItems = 0;
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* host = dynamic_cast<Host*>(item)) {
+            counter++;
+        }
+    }
+    curItems = counter;
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* host = dynamic_cast<Host*>(item)) {
+            host->setName("h" + QString::number(counter--));
+        }
+    }
+    hostCounter = curItems;
+}
+
+void NetworkView::renumberControllers() {
+    int counter = 0, curItems = 0;
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* controller = dynamic_cast<Controller*>(item)) {
+            counter++;
+        }
+    }
+    curItems = counter;
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* controller = dynamic_cast<Controller*>(item)) {
+            controller->setName("c" + QString::number(counter--));
+        }
+    }
+    controllerCounter = curItems;
+}
+
+void NetworkView::renumberSwitches() {
+    int counter = 0, curItems = 0;
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* sw = dynamic_cast<Switch*>(item)) {
+            counter++;
+        }
+    }
+    curItems = counter;
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* sw = dynamic_cast<Switch*>(item)) {
+            sw->setName("s" + QString::number(counter--));
+        }
+    }
+    switchCounter = curItems;
+}
+
+void NetworkView::renumberAllNodes() {
+    renumberHosts();
+    renumberControllers();
+    renumberSwitches();
+}
+
 void NetworkView::deleteSelectedItems()
 {
     QList<QGraphicsItem*> selectedItems = scene->selectedItems();
@@ -67,6 +121,8 @@ void NetworkView::deleteSelectedItems()
         scene->removeItem(item);
         delete item;
     }
+
+    renumberAllNodes();
 
     scene->update();
 }
