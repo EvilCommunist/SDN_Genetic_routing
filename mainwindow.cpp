@@ -92,6 +92,24 @@ void MainWindow::on_actionSave_as_triggered()
 
     if(!ok){
         QMessageBox::warning(this, "Ошибка",
+                                     "Произошло непредвиденное повреждение данных при сохранении файла!");
+    }
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    "Открыть файл",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                                    "Файлы топологии (*.sdn);;Файлы формата JSON (*.json)");
+    if (filename.isEmpty()) {
+        return;
+    }
+
+    bool ok = JSONProcessor::loadJSONFile(networkView, filename);
+
+    if(!ok){
+        QMessageBox::warning(this, "Ошибка",
                                      "Произошло непредвиденное повреждение данных при загрузке файла!");
     }
 }

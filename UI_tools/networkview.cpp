@@ -197,25 +197,28 @@ void NetworkView::setupNetworkElement(QGraphicsItem *item)
     scene->update();
 }
 
-void NetworkView::createHost(const QPointF &pos)
+Host* NetworkView::createHost(const QPointF &pos)
 {
     Host *host = new Host(pos.toPoint(), ++hostCounter);
     setupNetworkElement(host);
     scene->addItem(host);
+    return host;
 }
-void NetworkView::createController(const QPointF &pos)
+Controller* NetworkView::createController(const QPointF &pos)
 {
     Controller *controller = new Controller(pos.toPoint(), ++controllerCounter);
     setupNetworkElement(controller);
     scene->addItem(controller);
+    return controller;
 }
-void NetworkView::createSwitch(const QPointF &pos)
+Switch* NetworkView::createSwitch(const QPointF &pos)
 {
     Switch *sw = new Switch(pos.toPoint(), ++switchCounter);
     setupNetworkElement(sw);
     scene->addItem(sw);
+    return sw;
 }
-void NetworkView::createLink(NetNode *from, NetNode *to)
+NetLink* NetworkView::createLink(NetNode *from, NetNode *to)
 {
     NetLink *link = nullptr;
 
@@ -241,6 +244,7 @@ void NetworkView::createLink(NetNode *from, NetNode *to)
         from->addLink(link);
         to->addLink(link);
     }
+    return link;
 }
 void NetworkView::resetLinkMode()
 {
@@ -276,3 +280,24 @@ void NetworkView::editSelectedItem()
 
 
 QGraphicsScene* NetworkView::getScene() const{return this->scene;}
+void NetworkView::clear(){
+    hostCounter = 0;
+    controllerCounter = 0;
+    switchCounter = 0;
+    scene->clear();
+}
+void NetworkView::prepScene(){clear();}
+
+NetNode* NetworkView::loadNode(const QPointF &pos, DeviceType type){
+    switch(type){
+        case HOST: return createHost(pos);
+        case SWITCH: return createSwitch(pos);
+        case CONTROLLER: return createController(pos);
+        default: return nullptr;
+    }
+}
+
+NetLink* NetworkView::loadLink(NetNode* n1, NetNode* n2){
+    return createLink(n1, n2);
+}
+

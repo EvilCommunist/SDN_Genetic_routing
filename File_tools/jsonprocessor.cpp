@@ -62,5 +62,58 @@ bool JSONProcessor::saveJSONFile(const NetworkView* topology, const QString& fil
 }
 
 bool JSONProcessor::loadJSONFile(NetworkView *topology, const QString &filename){
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly))
+        return false;
 
+    topology->prepScene();
+    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+    QJsonObject root = doc.object();
+
+    QMap<QString, NetNode*> nodeMap;
+
+    for (const QJsonValue& nodeVal : root["nodes"].toArray()) {
+        QJsonObject nodeObj = nodeVal.toObject();
+        DeviceType type = static_cast<DeviceType>(nodeObj["type"].toInt());
+        QPointF pos(nodeObj["x"].toDouble(), nodeObj["y"].toDouble());
+
+        NetNode* node = nullptr;
+        switch (type) {
+            case HOST:
+                node = topology->loadNode(pos, DeviceType::HOST);
+                dynamic_cast<Host*>(node)->setIpAddr(nodeObj["ip"].toString());
+                dynamic_cast<Host*>(node)->setMacAddr(nodeObj["mac"].toString());
+                break;
+            case SWITCH:
+                node = topology->loadNode(pos, DeviceType::SWITCH);
+                break;
+            case CONTROLLER:
+                node = topology->loadNode(pos, DeviceType::CONTROLLER);
+                dynamic_cast<Controller*>(node)->setIp(nodeObj["ip"].toString());
+                dynamic_cast<Controller*>(node)->setPort(nodeObj["port"].toString());
+                break;
+        }
+
+        if (node) {
+            node->setName(nodeObj["name"].toString());
+            nodeMap[node->getName()] = node;
+        }
+    }
+
+    for (const QJsonValue& linkVal : root["links"].toArray()) {
+        QJsonObject linkObj = linkVal.toObject();
+        NetNode* from = nodeMap[linkObj["from"].toString()];
+        NetNode* to = nodeMap[linkObj["to"].toString()];
+
+        if (from && to) {
+            NetLink* link = topology->loadLink(from, to);
+            if (auto paramLink = dynamic_cast<NetLink*>(link)) {
+                paramLink->setBandwidth(linkObj["bandwidth"].toDouble());
+                paramLink->setDelay(linkObj["delay"].toDouble());
+                paramLink->setPacketLoss(linkObj["loss"].toDouble());
+            }
+        }
+    }
+
+    return true;
 }

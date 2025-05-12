@@ -19,6 +19,9 @@ public:
     explicit NetworkView(QWidget *parent = nullptr);
     ~NetworkView() = default;
     QGraphicsScene* getScene() const;
+    void prepScene();
+    NetNode* loadNode(const QPointF &pos, DeviceType type);
+    NetLink* loadLink(NetNode* n1, NetNode* n2);
 
 public slots:
     void setControllerMode();
@@ -41,10 +44,12 @@ private:
     int switchCounter = 0;
     NetNode *firstLinkNode = nullptr;
 
-    void createHost(const QPointF &pos);
-    void createController(const QPointF &pos);
-    void createSwitch(const QPointF &pos);
-    void createLink(NetNode *from, NetNode *to);
+    void clear();
+
+    Host* createHost(const QPointF &pos);
+    Controller* createController(const QPointF &pos);
+    Switch* createSwitch(const QPointF &pos);
+    NetLink* createLink(NetNode *from, NetNode *to);
     void setupNetworkElement(QGraphicsItem *item);
     void editSelectedItem();
     void resetLinkMode();
