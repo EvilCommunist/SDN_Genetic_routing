@@ -94,6 +94,10 @@ void MainWindow::on_actionSave_as_triggered()
         QMessageBox::warning(this, "Ошибка",
                                      "Произошло непредвиденное повреждение данных при сохранении файла!");
     }
+    openedProjectPath = filename;
+    QFileInfo fileInfo(filename);
+    QString fileName = fileInfo.fileName();
+    setWindowTitle(windowTitle() + " ["+fileName+"]");
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -111,5 +115,24 @@ void MainWindow::on_actionOpen_triggered()
     if(!ok){
         QMessageBox::warning(this, "Ошибка",
                                      "Произошло непредвиденное повреждение данных при загрузке файла!");
+    }
+    openedProjectPath = filename;
+    QFileInfo fileInfo(filename);
+    QString fileName = fileInfo.fileName();
+    setWindowTitle(windowTitle() + " ["+fileName+"]");
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+    if(openedProjectPath.isEmpty()){
+        on_actionSave_as_triggered();
+        return;
+    }
+
+    bool ok = JSONProcessor::saveJSONFile(networkView, openedProjectPath);
+
+    if(!ok){
+        QMessageBox::warning(this, "Ошибка",
+                                     "Произошло непредвиденное повреждение данных при сохранении файла!");
     }
 }
