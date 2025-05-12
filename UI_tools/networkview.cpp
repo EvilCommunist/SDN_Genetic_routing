@@ -274,3 +274,5 @@ void NetworkView::editSelectedItem()
     }
 }
 
+
+QGraphicsScene* NetworkView::getScene() const{return this->scene;}

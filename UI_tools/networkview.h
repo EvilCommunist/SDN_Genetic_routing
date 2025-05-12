@@ -18,6 +18,7 @@ class NetworkView : public QGraphicsView
 public:
     explicit NetworkView(QWidget *parent = nullptr);
     ~NetworkView() = default;
+    QGraphicsScene* getScene() const;
 
 public slots:
     void setControllerMode();

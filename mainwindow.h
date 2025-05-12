@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QActionGroup>
 #include "UI_tools/networkview.h"
+#include "File_tools/jsonprocessor.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +25,8 @@ private slots:
     void on_actionLink_triggered();
     void on_actionEdit_triggered();
 
+    void on_actionSave_as_triggered();
+
 private:
     Ui::MainWindow *ui;
     NetworkView *networkView;
@@ -36,7 +39,7 @@ private:
     QAction *actionSwitch;
     QAction *actionLink;
     QAction *actionEdit;
-    QString openedFilePath;
+    QString openedProjectPath;
 
     QToolBar *toolBar;
 

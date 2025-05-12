@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QtWidgets>
 #include <QDebug>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -72,4 +73,25 @@ void MainWindow::on_actionLink_triggered()
 void MainWindow::on_actionEdit_triggered()
 {
     emit signalChangeStateToEdit();
+}
+
+void MainWindow::on_actionSave_as_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    "Сохранить файл",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/untitled.sdn",
+                                                    "Файлы топологии (*.sdn);;Файлы формата JSON (*.json)");
+    if (filename.isEmpty()) {
+        return;
+    }
+    if (!filename.endsWith(".sdn", Qt::CaseInsensitive)) {
+        filename += ".sdn";
+    }
+
+    bool ok = JSONProcessor::saveJSONFile(networkView, filename);
+
+    if(!ok){
+        QMessageBox::warning(this, "Ошибка",
+                                     "Произошло непредвиденное повреждение данных при загрузке файла!");
+    }
 }
