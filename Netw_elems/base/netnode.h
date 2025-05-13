@@ -21,6 +21,7 @@ public:
     virtual void configure() = 0;
     void addLink(NetLink* link);
     void removeLink(NetLink* link);
+    int getPort();
     void updateLinks();
 
 protected:

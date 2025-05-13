@@ -16,6 +16,11 @@ public:
     NetNode* getNode1() const;
     NetNode* getNode2() const;
 
+    int getPortNode1() const;
+    int getPortNode2() const;
+    void setPortNode1(int newValue);
+    void setPortNode2(int newValue);
+
     virtual void updatePosition();
     virtual void configure() = 0;
     virtual DeviceType getDeviceType() const = 0;
@@ -33,6 +38,8 @@ protected:
 
     NetNode* node1;
     NetNode* node2;
+    int node1Port;
+    int node2Port;
     static constexpr qreal ARROW_SIZE = 10.0;
 };
 

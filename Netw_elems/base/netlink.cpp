@@ -10,10 +10,14 @@ NetLink::NetLink(NetNode* node1, NetNode* node2, QGraphicsItem* parent)
 
     setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap));
 
-    if (node1) node1->addLink(this);
-    if (node2) node2->addLink(this);
-
-
+    if (node1){
+        node1->addLink(this);
+        node1Port = node1->getPort();
+    }
+    if (node2){
+        node2->addLink(this);
+        node2Port = node2->getPort();
+    }
 
     updatePosition();
 }
@@ -50,3 +54,8 @@ QVariant NetLink::itemChange(GraphicsItemChange change, const QVariant &value)
 
 NetNode* NetLink::getNode1() const { return node1; }
 NetNode* NetLink::getNode2() const { return node2; }
+
+int NetLink::getPortNode1() const {return node1Port;}
+int NetLink::getPortNode2() const {return node2Port;}
+void NetLink::setPortNode1(int newValue) {node1Port=newValue;}
+void NetLink::setPortNode2(int newValue) {node2Port=newValue;}

@@ -31,8 +31,20 @@ void NetNode::updateLinks()
     }
 }
 void NetNode::addLink(NetLink* link) { links.append(link); }
-void NetNode::removeLink(NetLink* link) { if (!scene()) return; else links.removeAll(link); }
+void NetNode::removeLink(NetLink* link) {
+    if (!scene()) return;
+    else links.removeAll(link);
+    int currentPort = 0;
+    for(auto link:links){
+        if(link->getNode1() == this)
+            link->setPortNode1(++currentPort);
+        else
+            link->setPortNode2(++currentPort);
+    }
+}
 
 DeviceType NetNode::getDeviceType() const{return deviceType;}
 QString NetNode::getName() const{return name;}
 void NetNode::setName (const QString &name) {this->name=name; update();}
+
+int NetNode::getPort(){return links.size();}

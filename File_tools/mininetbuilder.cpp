@@ -84,16 +84,20 @@ QString mininetBuilder::generateLinks(const QList<NetLink*>& links)
     QString linkStr;
     for (NetLink* link : links) {
         if (auto stosLink = dynamic_cast<SSLink*>(link)) {
-            linkStr += QString("    net.addLink(%1, %2, bw=%3, delay='%4ms', loss=%5)\n")
+            linkStr += QString("    net.addLink(%1, %2, port1=%3, port2=%4, bw=%5, delay='%6ms', loss=%7)\n")
                 .arg(nodeToMininetName(link->getNode1()))
                 .arg(nodeToMininetName(link->getNode2()))
+                .arg(link->getPortNode1())
+                .arg(link->getPortNode2())
                 .arg(stosLink->getBandwidth())
                 .arg(stosLink->getDelay())
                 .arg(stosLink->getPacketLoss()*100);
         } else if (auto stosLink = dynamic_cast<HSLink*>(link)) {
-            linkStr += QString("    net.addLink(%1, %2, bw=%3, delay='%4ms', loss=%5)\n")
+            linkStr += QString("    net.addLink(%1, %2, port1=%3, port2=%4, bw=%5, delay='%6ms', loss=%7)\n")
                 .arg(nodeToMininetName(link->getNode1()))
                 .arg(nodeToMininetName(link->getNode2()))
+                .arg(link->getPortNode1())
+                .arg(link->getPortNode2())
                 .arg(stosLink->getBandwidth())
                 .arg(stosLink->getDelay())
                 .arg(stosLink->getPacketLoss()*100);
