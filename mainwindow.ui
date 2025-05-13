@@ -172,8 +172,14 @@
    </property>
   </action>
   <action name="actionExport_as_mininet_script">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Mininet Script</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
    </property>
   </action>
   <action name="actionMetrik_data">

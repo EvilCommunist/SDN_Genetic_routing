@@ -5,6 +5,7 @@
 #include <QActionGroup>
 #include "UI_tools/networkview.h"
 #include "File_tools/jsonprocessor.h"
+#include "File_tools/mininetbuilder.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,6 +31,8 @@ private slots:
     void on_actionOpen_triggered();
 
     void on_actionSave_triggered();
+
+    void on_actionExport_as_mininet_script_triggered();
 
 private:
     Ui::MainWindow *ui;

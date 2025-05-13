@@ -136,3 +136,51 @@ void MainWindow::on_actionSave_triggered()
                                      "Произошло непредвиденное повреждение данных при сохранении файла!");
     }
 }
+
+void MainWindow::on_actionExport_as_mininet_script_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    "Сохранить файл",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/untitled.sdn.py",
+                                                    "Скрипты mininet (*.sdn.py);;Скрипты Python (*.py)");
+    if (filename.isEmpty()) {
+        return;
+    }
+    if (!filename.endsWith(".sdn.py", Qt::CaseInsensitive)) {
+        filename += ".sdn.py";
+    }
+
+    auto topology = networkView->getScene();
+    int controllerPort = 0;
+    QString controllerIP = "";
+    QList<NetNode*> nodes{};
+
+    for (QGraphicsItem* item : topology->items()) {
+        if (auto node = dynamic_cast<NetNode*>(item)) {
+            if(auto controller = dynamic_cast<Controller*>(node)){
+                controllerPort = controller->getPort().toInt();
+                controllerIP = controller->getIp();
+            }else{
+                nodes.append(node);
+            }
+        }
+    }
+
+    QList<NetLink*> links{};
+    for (QGraphicsItem* item : topology->items()) {
+        if (auto link = dynamic_cast<NetLink*>(item)) {
+            if(link->getNode1()->getName()[0]=="c" || link->getNode2()->getName()[0]=="c")
+                continue;
+            links.append(link);
+        }
+    }
+
+    QString script = mininetBuilder::generateMininetScript(nodes, links, controllerIP, controllerPort);
+
+    bool ok = mininetBuilder::saveMNScript(script, filename);
+
+    if(!ok){
+        QMessageBox::warning(this, "Ошибка",
+                                     "Произошло непредвиденное повреждение данных при сохранении файла!");
+    }
+}
