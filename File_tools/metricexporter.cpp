@@ -101,12 +101,11 @@ QString metricExporter::generateSwitchHostMetrics(const QList<NetNode*>& nodes, 
             QString node1Name = node1->getName();
             QString node2Name = node2->getName();
 
-            result += QString("%1-%2: %3, %4, %5\n")
-                .arg(node1Name)
-                .arg(node2Name)
-                .arg(getLinkMetric(link, DELAY))
-                .arg(getLinkMetric(link, BANDWIDTH))
-                .arg(getLinkMetric(link, PACKET_LOSS));
+            result += QString("%1-%2: %3, %4, %5\n").arg(node1Name)
+                                                    .arg(node2Name)
+                                                    .arg(getLinkMetric(link, DELAY))
+                                                    .arg(getLinkMetric(link, BANDWIDTH))
+                                                    .arg(getLinkMetric(link, PACKET_LOSS));
         }
     }
 
