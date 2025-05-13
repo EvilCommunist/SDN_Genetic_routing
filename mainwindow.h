@@ -37,6 +37,8 @@ private slots:
 
     void on_actionMetrik_data_triggered();
 
+    void on_actionNew_triggered();
+
 private:
     Ui::MainWindow *ui;
     NetworkView *networkView;

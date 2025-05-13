@@ -229,3 +229,10 @@ void MainWindow::on_actionMetrik_data_triggered()
                                      "Произошло непредвиденное повреждение данных при сохранении файла!");
     }
 }
+
+void MainWindow::on_actionNew_triggered()
+{
+    openedProjectPath = "";
+    networkView->prepScene();
+    setWindowTitle("G_SDN Topology");
+}

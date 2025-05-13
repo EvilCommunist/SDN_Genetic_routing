@@ -140,8 +140,14 @@
    </property>
   </action>
   <action name="actionNew">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionSave">
