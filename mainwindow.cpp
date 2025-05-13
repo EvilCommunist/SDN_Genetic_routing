@@ -184,3 +184,48 @@ void MainWindow::on_actionExport_as_mininet_script_triggered()
                                      "Произошло непредвиденное повреждение данных при сохранении файла!");
     }
 }
+
+void MainWindow::on_actionMetrik_data_triggered()
+{
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    "Сохранить файл",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/untitled.sdn.txt",
+                                                    "Метрики топологии (*.sdn.txt);;Текстовые файлы (*.txt)");
+    if (filename.isEmpty()) {
+        return;
+    }
+    if (!filename.endsWith(".sdn.txt", Qt::CaseInsensitive)) {
+        filename += ".sdn.txt";
+    }
+
+    auto topology = networkView->getScene();
+    QList<NetNode*> nodes{};
+
+    for (QGraphicsItem* item : topology->items()) {
+        if (auto node = dynamic_cast<NetNode*>(item)) {
+            if(auto controller = dynamic_cast<Controller*>(node)){
+                continue;
+            }else{
+                nodes.append(node);
+            }
+        }
+    }
+
+    QList<NetLink*> links{};
+    for (QGraphicsItem* item : topology->items()) {
+        if (auto link = dynamic_cast<NetLink*>(item)) {
+            if(link->getNode1()->getName()[0]=="c" || link->getNode2()->getName()[0]=="c")
+                continue;
+            links.append(link);
+        }
+    }
+
+    QString metric = metricExporter::exportMetrics(nodes, links);
+
+    bool ok = metricExporter::saveMetric(metric, filename);
+
+    if(!ok){
+        QMessageBox::warning(this, "Ошибка",
+                                     "Произошло непредвиденное повреждение данных при сохранении файла!");
+    }
+}

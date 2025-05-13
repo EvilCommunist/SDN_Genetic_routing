@@ -6,6 +6,7 @@
 #include "UI_tools/networkview.h"
 #include "File_tools/jsonprocessor.h"
 #include "File_tools/mininetbuilder.h"
+#include "File_tools/metricexporter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,6 +34,8 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actionExport_as_mininet_script_triggered();
+
+    void on_actionMetrik_data_triggered();
 
 private:
     Ui::MainWindow *ui;

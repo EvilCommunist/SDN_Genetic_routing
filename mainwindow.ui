@@ -183,8 +183,14 @@
    </property>
   </action>
   <action name="actionMetrik_data">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>Metrik data</string>
+    <string>Metric data</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+M</string>
    </property>
   </action>
   <action name="actionController">
