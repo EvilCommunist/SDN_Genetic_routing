@@ -14,6 +14,7 @@ DEPENDPATH += $$PWD \
 
 SOURCES += \
     File_tools/jsonprocessor.cpp \
+    File_tools/metricexporter.cpp \
     File_tools/mininetbuilder.cpp \
     Netw_elems/base/netlink.cpp \
     Netw_elems/base/netnode.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     File_tools/jsonprocessor.h \
+    File_tools/metricexporter.h \
     File_tools/mininetbuilder.h \
     Netw_elems/base/devices.h \
     Netw_elems/base/netlink.h \
