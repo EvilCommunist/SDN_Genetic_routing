@@ -234,5 +234,5 @@ void MainWindow::on_actionNew_triggered()
 {
     openedProjectPath = "";
     networkView->prepScene();
-    setWindowTitle("G_SDN Topology");
+    setWindowTitle("G_SDN");
 }
