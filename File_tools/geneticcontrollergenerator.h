@@ -1,11 +1,20 @@
 #ifndef GENETICCONTROLLERGENERATOR_H
 #define GENETICCONTROLLERGENERATOR_H
 
+#include <QString>
+#include <QMap>
 
-class geneticControllerGenerator
+class GeneticControllerGenerator
 {
 public:
-    geneticControllerGenerator();
+    static QString generateGeneticAlgorithmScript(
+        int populationSize,
+        double crossoverProbability,
+        double mutationRate,
+        int maxGenerations,
+        int earlyStopGen);
+
+    static bool saveScript(const QString& script, const QString& filename);
 };
 
 #endif // GENETICCONTROLLERGENERATOR_H

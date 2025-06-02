@@ -124,8 +124,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionGenetic_algorithm">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Genetic algorithm</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
   <action name="actionOpen">

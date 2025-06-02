@@ -1,5 +1,9 @@
 #include "geneticcontrollerdialog.h"
 #include "ui_geneticcontrollerdialog.h"
+#include "../File_tools/geneticcontrollergenerator.h"
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QMessageBox>
 
 geneticControllerDialog::geneticControllerDialog(QWidget *parent) :
     QDialog(parent),
@@ -14,7 +18,31 @@ geneticControllerDialog::geneticControllerDialog(QWidget *parent) :
 }
 
 void geneticControllerDialog::accept(){
+    QString filename = QFileDialog::getSaveFileName(this,
+                                                    "Сохранить файл",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/algorithm.py",
+                                                    "Python скрипт (*.py)");
+    if (filename.isEmpty()) {
+        return;
+    }
+    if (!filename.endsWith(".py", Qt::CaseInsensitive)) {
+        filename += ".py";
+    }
 
+    QString script = GeneticControllerGenerator::generateGeneticAlgorithmScript(ui->POP_SIZE->text().toInt(),
+                                                                                ui->P_CROSSOVER->text().toDouble()/100,
+                                                                                ui->P_MUTATION->text().toDouble()/100,
+                                                                                ui->MAX_GEN->text().toInt(),
+                                                                                ui->EARLY_STOP->text().toInt());
+
+    bool ok = GeneticControllerGenerator::saveScript(script, filename);
+
+    if(!ok){
+        QMessageBox::warning(this, "Ошибка",
+                                     "Произошло непредвиденное повреждение данных при сохранении файла!");
+    }
+
+    done(QDialog::Accepted);
 }
 
 geneticControllerDialog::~geneticControllerDialog()

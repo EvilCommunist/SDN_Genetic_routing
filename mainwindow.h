@@ -39,6 +39,8 @@ private slots:
 
     void on_actionNew_triggered();
 
+    void on_actionGenetic_algorithm_triggered();
+
 private:
     Ui::MainWindow *ui;
     NetworkView *networkView;

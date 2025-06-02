@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "UI_tools/geneticcontrollerdialog.h"
 #include <QtWidgets>
 #include <QDebug>
 #include <QFileDialog>
@@ -235,4 +236,10 @@ void MainWindow::on_actionNew_triggered()
     openedProjectPath = "";
     networkView->prepScene();
     setWindowTitle("G_SDN");
+}
+
+void MainWindow::on_actionGenetic_algorithm_triggered()
+{
+    geneticControllerDialog dialog;
+    dialog.exec();
 }
