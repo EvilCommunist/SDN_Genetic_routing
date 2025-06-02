@@ -13,6 +13,7 @@ DEPENDPATH += $$PWD \
 
 
 SOURCES += \
+    File_tools/geneticcontrollergenerator.cpp \
     File_tools/jsonprocessor.cpp \
     File_tools/metricexporter.cpp \
     File_tools/mininetbuilder.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
     Netw_elems/sslink.cpp \
     Netw_elems/switch.cpp \
     UI_tools/controllerdialog.cpp \
+    UI_tools/geneticcontrollerdialog.cpp \
     UI_tools/hostdialog.cpp \
     UI_tools/linkparamdialog.cpp \
     main.cpp \
@@ -32,6 +34,7 @@ SOURCES += \
     UI_tools/networkview.cpp
 
 HEADERS += \
+    File_tools/geneticcontrollergenerator.h \
     File_tools/jsonprocessor.h \
     File_tools/metricexporter.h \
     File_tools/mininetbuilder.h \
@@ -45,6 +48,7 @@ HEADERS += \
     Netw_elems/sslink.h \
     Netw_elems/switch.h \
     UI_tools/controllerdialog.h \
+    UI_tools/geneticcontrollerdialog.h \
     UI_tools/hostdialog.h \
     UI_tools/linkparamdialog.h \
     mainwindow.h \
@@ -52,6 +56,7 @@ HEADERS += \
 
 FORMS += \
     UI_tools/controllerdialog.ui \
+    UI_tools/geneticcontrollerdialog.ui \
     UI_tools/hostdialog.ui \
     UI_tools/linkparamdialog.ui \
     mainwindow.ui
