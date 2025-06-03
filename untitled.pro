@@ -1,7 +1,11 @@
 QT += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += \
+    c++11 \
+    pkgconfig # link_pkg for qterm
+QTermWidget = qtermwidget5
+PKGCONFIG += $${QTermWidget} # for qterm
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -29,6 +33,7 @@ SOURCES += \
     UI_tools/geneticcontrollerdialog.cpp \
     UI_tools/hostdialog.cpp \
     UI_tools/linkparamdialog.cpp \
+    UI_tools/ryudialog.cpp \
     main.cpp \
     mainwindow.cpp \
     UI_tools/networkview.cpp
@@ -51,6 +56,7 @@ HEADERS += \
     UI_tools/geneticcontrollerdialog.h \
     UI_tools/hostdialog.h \
     UI_tools/linkparamdialog.h \
+    UI_tools/ryudialog.h \
     mainwindow.h \
     UI_tools/networkview.h
 
@@ -59,6 +65,7 @@ FORMS += \
     UI_tools/geneticcontrollerdialog.ui \
     UI_tools/hostdialog.ui \
     UI_tools/linkparamdialog.ui \
+    UI_tools/ryudialog.ui \
     mainwindow.ui
 
 
