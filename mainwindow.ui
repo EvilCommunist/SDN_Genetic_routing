@@ -115,6 +115,8 @@
      <string>Algorithms</string>
     </property>
     <addaction name="actionGenetic_algorithm"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_controller"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuExport"/>
@@ -279,6 +281,17 @@
    </property>
    <property name="shortcut">
     <string>Del</string>
+   </property>
+  </action>
+  <action name="actionOpen_controller">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Open controller</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+C</string>
    </property>
   </action>
  </widget>

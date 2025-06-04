@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "UI_tools/geneticcontrollerdialog.h"
+#include "UI_tools/ryudialog.h"
 #include <QtWidgets>
 #include <QDebug>
 #include <QFileDialog>
@@ -31,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    for (auto *child : findChildren<QWidget*>()) {
+        if (child != this) child->close();
+    }
 }
 
 void MainWindow::topologyTools(){
@@ -242,4 +246,20 @@ void MainWindow::on_actionGenetic_algorithm_triggered()
 {
     geneticControllerDialog dialog;
     dialog.exec();
+}
+
+void MainWindow::on_actionOpen_controller_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    "Открыть файл терминала",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                                    "Файлы терминала Ryu (*.py)");
+    if (filename.isEmpty()) {
+        return;
+    }
+
+    RyuDialog *dialog = new RyuDialog(filename, this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->setWindowModality(Qt::NonModal);
+    dialog->show();
 }

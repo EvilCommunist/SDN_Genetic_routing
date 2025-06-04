@@ -7,6 +7,8 @@ CONFIG += \
 QTermWidget = qtermwidget5
 PKGCONFIG += $${QTermWidget} # for qterm
 
+LIBS += -lqtermwidget5
+
 DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += $$PWD \
