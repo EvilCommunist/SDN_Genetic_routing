@@ -35,6 +35,8 @@ void NetNode::removeLink(NetLink* link) {
     if (!scene()) return;
     else links.removeAll(link);
     int currentPort = 0;
+    if(links.empty())
+        return;
     for(auto link:links){
         if(link->getNode1() == this)
             link->setPortNode1(++currentPort);

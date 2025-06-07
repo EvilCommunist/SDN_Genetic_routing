@@ -301,3 +301,50 @@ NetLink* NetworkView::loadLink(NetNode* n1, NetNode* n2){
     return createLink(n1, n2);
 }
 
+
+// web functions
+
+void NetworkView::highlightPath(const QVector<int>& path) {
+    clearPath();
+
+    QList<Switch*> pathSwitches{};
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* sw = dynamic_cast<Switch*>(item)) {
+            QString name = sw->getName();
+            if (!name.isEmpty() && name.back().isDigit()) {
+                bool ok;
+                int switchNumber = name.right(1).toInt(&ok);
+                if (ok && path.contains(switchNumber)) {
+                    pathSwitches.append(sw);
+                    sw->setSelected(true);
+                }
+            }
+        }
+    }
+
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* link = dynamic_cast<SSLink*>(item)) {
+            NetNode* node1 = link->getNode1();
+            NetNode* node2 = link->getNode2();
+
+            bool node1InPath = pathSwitches.contains(static_cast<Switch*>(node1));
+            bool node2InPath = pathSwitches.contains(static_cast<Switch*>(node2));
+
+            if (node1InPath && node2InPath) {
+                link->setIncludedInPathState(Qt::red);
+            }
+        }
+    }
+}
+
+void NetworkView::clearPath()
+{
+    for (QGraphicsItem* item : scene->items()) {
+        if (auto* link = dynamic_cast<SSLink*>(item)) {
+            link->setNormalState();
+        }
+        else if (auto* node = dynamic_cast<NetNode*>(item)) {
+            node->setSelected(false);
+        }
+    }
+}

@@ -263,3 +263,8 @@ void MainWindow::on_actionOpen_controller_triggered()
     dialog->setWindowModality(Qt::NonModal);
     dialog->show();
 }
+
+
+void MainWindow::visualizePath(const QVector<int>& path) {
+    networkView->highlightPath(path);
+}

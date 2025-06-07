@@ -20,27 +20,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void visualizePath(const QVector<int>& path);
+
 private slots:
     void on_actionController_triggered();
     void on_actionHost_triggered();
     void on_actionSwitch_triggered();
     void on_actionLink_triggered();
     void on_actionEdit_triggered();
-
     void on_actionSave_as_triggered();
-
     void on_actionOpen_triggered();
-
     void on_actionSave_triggered();
-
     void on_actionExport_as_mininet_script_triggered();
-
     void on_actionMetrik_data_triggered();
-
     void on_actionNew_triggered();
-
     void on_actionGenetic_algorithm_triggered();
-
     void on_actionOpen_controller_triggered();
 
 private:

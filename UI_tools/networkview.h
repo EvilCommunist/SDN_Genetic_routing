@@ -30,6 +30,7 @@ public slots:
     void setLinkMode();
     void setEditMode();
     void deleteSelectedItems();
+    void highlightPath(const QVector<int>& path);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -58,6 +59,9 @@ private:
     void renumberControllers();
     void renumberSwitches();
     void renumberAllNodes();
+
+    // web functions
+    void clearPath();
 };
 
 #endif // NETWORKVIEW_H

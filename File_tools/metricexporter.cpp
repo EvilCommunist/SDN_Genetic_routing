@@ -75,6 +75,8 @@ QVector<QVector<float>> metricExporter::generateAdjacencyMatrix(const QList<NetN
     }
 
     for (NetLink* link : links) {
+        if(!dynamic_cast<Switch*>(link->getNode1()) || !dynamic_cast<Switch*>(link->getNode2()))
+            continue;
         int i = switchIndex[link->getNode1()];
         int j = switchIndex[link->getNode2()];
         float metric = getLinkMetric(link, metricType);

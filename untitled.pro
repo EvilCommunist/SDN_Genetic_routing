@@ -1,9 +1,10 @@
-QT += core gui
+QT += core gui\
+      network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += \
     c++11 \
-    pkgconfig # link_pkg for qterm
+    pkgconfig \ # link_pkg for qterm
 QTermWidget = qtermwidget5
 PKGCONFIG += $${QTermWidget} # for qterm
 
@@ -38,7 +39,10 @@ SOURCES += \
     UI_tools/ryudialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    UI_tools/networkview.cpp
+    UI_tools/networkview.cpp \
+    tcp/listener.cpp \
+    tcp/pathgetter.cpp \
+    tcp/tcpserver.cpp
 
 HEADERS += \
     File_tools/geneticcontrollergenerator.h \
@@ -60,7 +64,10 @@ HEADERS += \
     UI_tools/linkparamdialog.h \
     UI_tools/ryudialog.h \
     mainwindow.h \
-    UI_tools/networkview.h
+    UI_tools/networkview.h \
+    tcp/listener.h \
+    tcp/pathgetter.h \
+    tcp/tcpserver.h
 
 FORMS += \
     UI_tools/controllerdialog.ui \
