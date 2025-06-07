@@ -43,6 +43,16 @@ void MainWindow::topologyTools(){
     ui->actionController->setIcon(QIcon(":/imgs/controller.png"));
     ui->actionLink->setIcon(QIcon(":/imgs/link.png"));
     ui->actionEdit->setIcon(QIcon(":/imgs/edit.png"));
+    // mini icons
+    ui->actionExport_as_mininet_script->setIcon(QIcon(":/imgs/python.png"));
+    ui->actionOpen_controller->setIcon(QIcon(":/imgs/python_go.png"));
+    ui->actionGenetic_algorithm->setIcon(QIcon(":/imgs/DNA.png"));
+    ui->actionMetrik_data->setIcon(QIcon(":/imgs/metrics.png"));
+    ui->actionDelete->setIcon(QIcon(":/imgs/del.png"));
+    ui->actionNew->setIcon(QIcon(":/imgs/new_file.png"));
+    ui->actionSave->setIcon(QIcon(":/imgs/save_file.png"));
+    ui->actionSave_as->setIcon(QIcon(":/imgs/save_file_as.png"));
+    ui->actionOpen->setIcon(QIcon(":/imgs/open_file.png"));
 
     QToolBar *topologyToolBar = new QToolBar("Topology Builder");
     topologyToolBar->setIconSize(QSize(64, 64));

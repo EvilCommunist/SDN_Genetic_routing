@@ -5,5 +5,14 @@
         <file>controller.png</file>
         <file>link.png</file>
         <file>edit.png</file>
+        <file>python_go.png</file>
+        <file>python.png</file>
+        <file>metrics.png</file>
+        <file>del.png</file>
+        <file>save_file_as.png</file>
+        <file>save_file.png</file>
+        <file>new_file.png</file>
+        <file>DNA.png</file>
+        <file>open_file.png</file>
     </qresource>
 </RCC>

@@ -99,16 +99,7 @@
     <property name="title">
      <string>Options</string>
     </property>
-    <widget class="QMenu" name="menuShow_metric">
-     <property name="title">
-      <string>Show metric</string>
-     </property>
-     <addaction name="actionDelay"/>
-     <addaction name="actionBandwidth"/>
-     <addaction name="actionPLR"/>
-    </widget>
     <addaction name="actionShow_ports"/>
-    <addaction name="menuShow_metric"/>
    </widget>
    <widget class="QMenu" name="menuAlgorithms">
     <property name="title">
