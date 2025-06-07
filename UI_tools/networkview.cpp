@@ -322,16 +322,20 @@ void NetworkView::highlightPath(const QVector<int>& path) {
         }
     }
 
-    for (QGraphicsItem* item : scene->items()) {
-        if (auto* link = dynamic_cast<SSLink*>(item)) {
-            NetNode* node1 = link->getNode1();
-            NetNode* node2 = link->getNode2();
+    for (int i = 0; i < pathSwitches.size() - 1; ++i) {
+        Switch* current = pathSwitches[i];
+        Switch* next = pathSwitches[i + 1];
 
-            bool node1InPath = pathSwitches.contains(static_cast<Switch*>(node1));
-            bool node2InPath = pathSwitches.contains(static_cast<Switch*>(node2));
+        for (QGraphicsItem* item : scene->items()) {
+            if (auto* link = dynamic_cast<SSLink*>(item)) {
+                NetNode* node1 = link->getNode1();
+                NetNode* node2 = link->getNode2();
 
-            if (node1InPath && node2InPath) {
-                link->setIncludedInPathState(Qt::red);
+                if ((node1 == current && node2 == next) ||
+                    (node1 == next && node2 == current)) {
+                    link->setIncludedInPathState(Qt::red);
+                    break;
+                }
             }
         }
     }

@@ -14,7 +14,24 @@ SSLink::SSLink(NetNode* node1, NetNode* node2, QGraphicsItem* parent)
 }
 
 void SSLink::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget){
-    NetLink::paint(painter, option, widget);
+    QPen pen;
+    switch(state) {
+        case State::InPath:
+            pen.setColor(pathColor);
+            pen.setWidth(3);
+            break;
+        case State::Selected:
+            pen.setColor(Qt::blue);
+            pen.setWidth(2);
+            break;
+        case State::Normal:
+        default:
+            pen.setColor(Qt::black);
+            pen.setWidth(2);
+            break;
+    }
+    painter->setPen(pen);
+    painter->drawLine(line());
 
     if (option->state & QStyle::State_Selected) {
         QString metrics = QString("BW: %1 Mbps\nDelay: %2 ms\nLoss: %3%")
