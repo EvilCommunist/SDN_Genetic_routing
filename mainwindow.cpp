@@ -271,6 +271,7 @@ void MainWindow::on_actionOpen_controller_triggered()
     RyuDialog *dialog = new RyuDialog(filename, this);
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->setWindowModality(Qt::NonModal);
+    dialog->setFixedSize(dialog->size());
     dialog->show();
 }
 

@@ -95,12 +95,6 @@
     <addaction name="actionEdit"/>
     <addaction name="actionDelete"/>
    </widget>
-   <widget class="QMenu" name="menuOptions">
-    <property name="title">
-     <string>Options</string>
-    </property>
-    <addaction name="actionShow_ports"/>
-   </widget>
    <widget class="QMenu" name="menuAlgorithms">
     <property name="title">
      <string>Algorithms</string>
@@ -112,7 +106,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuExport"/>
    <addaction name="menuTools"/>
-   <addaction name="menuOptions"/>
    <addaction name="menuAlgorithms"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
