@@ -284,6 +284,13 @@ void NetworkView::clear(){
     hostCounter = 0;
     controllerCounter = 0;
     switchCounter = 0;
+    const auto items = scene->items();
+    for (QGraphicsItem* item : items) {
+        if (dynamic_cast<NetLink*>(item)) {
+            scene->removeItem(item);
+            delete item;
+        }
+    }
     scene->clear();
 }
 void NetworkView::prepScene(){clear();}

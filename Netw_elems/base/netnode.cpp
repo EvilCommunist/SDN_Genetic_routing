@@ -1,6 +1,5 @@
 #include "netnode.h"
 #include "netlink.h"
-#include <QDebug>
 
 NetNode::NetNode(DeviceType type, QGraphicsItem *parent)
     : QGraphicsItem(parent),
@@ -33,10 +32,10 @@ void NetNode::updateLinks()
 void NetNode::addLink(NetLink* link) { links.append(link); }
 void NetNode::removeLink(NetLink* link) {
     if (!scene()) return;
-    else links.removeAll(link);
-    int currentPort = 0;
     if(links.empty())
         return;
+    else links.removeAll(link);
+    int currentPort = 0;
     for(auto link:links){
         if(link->getNode1() == this)
             link->setPortNode1(++currentPort);
