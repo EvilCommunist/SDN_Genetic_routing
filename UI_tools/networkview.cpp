@@ -315,7 +315,6 @@ NetLink* NetworkView::loadLink(NetNode* n1, NetNode* n2){
 void NetworkView::highlightPath(const QVector<int>& path) {
     clearPath();
 
-    // 1. Собираем все свичи сцены в мапу: номер -> Switch*
     QMap<int, Switch*> switchesMap;
     for (QGraphicsItem* item : scene->items()) {
         if (auto* sw = dynamic_cast<Switch*>(item)) {
@@ -331,7 +330,6 @@ void NetworkView::highlightPath(const QVector<int>& path) {
         }
     }
 
-    // 2. Сортируем свичи в порядке, указанном в path
     QList<Switch*> pathSwitches;
     for (int switchNumber : path) {
         if (switchesMap.contains(switchNumber)) {
@@ -339,7 +337,6 @@ void NetworkView::highlightPath(const QVector<int>& path) {
         }
     }
 
-    // 3. Подсвечиваем линки между соседними свичами в pathSwitches
     for (int i = 0; i < pathSwitches.size() - 1; ++i) {
         Switch* current = pathSwitches[i];
         Switch* next = pathSwitches[i + 1];
