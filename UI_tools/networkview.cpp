@@ -315,24 +315,31 @@ NetLink* NetworkView::loadLink(NetNode* n1, NetNode* n2){
 void NetworkView::highlightPath(const QVector<int>& path) {
     clearPath();
 
-    QList<Switch*> pathSwitches{};
+    // 1. Собираем все свичи сцены в мапу: номер -> Switch*
+    QMap<int, Switch*> switchesMap;
     for (QGraphicsItem* item : scene->items()) {
         if (auto* sw = dynamic_cast<Switch*>(item)) {
             QString name = sw->getName();
-            if (!name.isEmpty()) {
-                QRegularExpressionMatch match = QRegularExpression("(\\d+)$").match(name);
-                if (match.hasMatch()) {
-                    bool ok;
-                    int switchNumber = match.captured(1).toInt(&ok);
-                    if (ok && path.contains(switchNumber)) {
-                        pathSwitches.append(sw);
-                        sw->setSelected(true);
-                    }
+            QRegularExpressionMatch match = QRegularExpression("(\\d+)$").match(name);
+            if (match.hasMatch()) {
+                bool ok;
+                int switchNumber = match.captured(1).toInt(&ok);
+                if (ok && path.contains(switchNumber)) {
+                    switchesMap[switchNumber] = sw;
                 }
             }
         }
     }
 
+    // 2. Сортируем свичи в порядке, указанном в path
+    QList<Switch*> pathSwitches;
+    for (int switchNumber : path) {
+        if (switchesMap.contains(switchNumber)) {
+            pathSwitches.append(switchesMap[switchNumber]);
+        }
+    }
+
+    // 3. Подсвечиваем линки между соседними свичами в pathSwitches
     for (int i = 0; i < pathSwitches.size() - 1; ++i) {
         Switch* current = pathSwitches[i];
         Switch* next = pathSwitches[i + 1];
@@ -345,7 +352,6 @@ void NetworkView::highlightPath(const QVector<int>& path) {
                 if ((node1 == current && node2 == next) ||
                     (node1 == next && node2 == current)) {
                     link->setIncludedInPathState(Qt::red);
-                    break;
                 }
             }
         }

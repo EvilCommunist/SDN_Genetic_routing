@@ -86,7 +86,14 @@ QVector<QVector<float>> metricExporter::generateAdjacencyMatrix(const QList<NetN
         matrix[j][i] = metric;
     }
 
-    return matrix;
+    auto matrix_reversed = matrix;
+    for(auto i=0; i<matrix_reversed.size(); i++){
+        for(auto j=0; j<matrix_reversed.size(); j++){
+            matrix_reversed[i][j] = matrix[matrix.size()-1-i][matrix.size()-1-j];
+        }
+    }
+
+    return matrix_reversed;
 }
 
 QString metricExporter::generateSwitchHostMetrics(const QList<NetNode*>& nodes, const QList<NetLink*>& links)
