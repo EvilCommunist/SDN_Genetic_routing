@@ -102,6 +102,7 @@
     <addaction name="actionGenetic_algorithm"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_controller"/>
+    <addaction name="actionOpen_mininet_script"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuExport"/>
@@ -276,6 +277,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+C</string>
+   </property>
+  </action>
+  <action name="actionOpen_mininet_script">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Open mininet script</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+M</string>
    </property>
   </action>
  </widget>

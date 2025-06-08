@@ -33,7 +33,6 @@ private:
     void startRyuManager();
     void stopRyuManager();
     void setupTerminal();
-    void updateButtons(bool isRunning);
 };
 
 #endif // RYUDIALOG_H

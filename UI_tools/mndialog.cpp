@@ -1,28 +1,29 @@
-#include "ryudialog.h"
-#include "ui_ryudialog.h"
+#include "mndialog.h"
+#include "ui_mndialog.h"
 #include <QVBoxLayout>
 #include <QMessageBox>
 
-RyuDialog::RyuDialog(const QString& controllerPath, QWidget *parent) :
+MNDialog::MNDialog(const QString& scriptPath, QWidget *parent) :
     QWidget(parent, Qt::Window),
-    ui(new Ui::RyuDialog),
+    ui(new Ui::MNDialog),
     terminal(nullptr),
-    currentControllerPath(controllerPath)
+    currentScriptPath(scriptPath),
+    isRunning(true)
 {
     ui->setupUi(this);
     setWindowFlag(Qt::Window);
 
     setupTerminal();
-    startRyuManager();
+    startMininet();
 }
 
-RyuDialog::~RyuDialog()
+MNDialog::~MNDialog()
 {
-    stopRyuManager();
+    stopMininet();
     delete ui;
 }
 
-void RyuDialog::setupTerminal()
+void MNDialog::setupTerminal()
 {
     QVBoxLayout *layout = new QVBoxLayout(ui->termArea);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -43,7 +44,7 @@ void RyuDialog::setupTerminal()
     terminal->setScrollBarPosition(QTermWidget::ScrollBarRight);
 }
 
-void RyuDialog::startRyuManager()
+void MNDialog::startMininet()
 {
     if (!terminal) {
         QMessageBox::critical(this, "Error", "Terminal not initialized");
@@ -52,29 +53,27 @@ void RyuDialog::startRyuManager()
 
     terminal->clear();
 
-    QString controllerPath = currentControllerPath;
+    QString controllerPath = currentScriptPath;
     controllerPath.replace(" ", "\\ ");
 
-    terminal->sendText("ryu-manager " + controllerPath + "\n");
+    terminal->sendText("sudo python3 " + controllerPath + "\n");
+    isRunning = true;
 }
 
-void RyuDialog::stopRyuManager()
+void MNDialog::stopMininet()
 {
-    terminal->sendText("\x03");
+    if(isRunning){
+        terminal->sendText("exit\n");
+        isRunning = false;
+    }
 }
 
-void RyuDialog::on_restart_clicked()
+void MNDialog::on_start_clicked()
 {
-    stopRyuManager();
-    QTimer::singleShot(500, this, &RyuDialog::startRyuManager);
+    startMininet();
 }
 
-void RyuDialog::on_start_clicked()
+void MNDialog::on_stop_clicked()
 {
-    startRyuManager();
-}
-
-void RyuDialog::on_stop_clicked()
-{
-    stopRyuManager();
+    stopMininet();
 }

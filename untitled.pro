@@ -36,6 +36,7 @@ SOURCES += \
     UI_tools/geneticcontrollerdialog.cpp \
     UI_tools/hostdialog.cpp \
     UI_tools/linkparamdialog.cpp \
+    UI_tools/mndialog.cpp \
     UI_tools/ryudialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
     UI_tools/geneticcontrollerdialog.h \
     UI_tools/hostdialog.h \
     UI_tools/linkparamdialog.h \
+    UI_tools/mndialog.h \
     UI_tools/ryudialog.h \
     mainwindow.h \
     UI_tools/networkview.h \
@@ -74,6 +76,7 @@ FORMS += \
     UI_tools/geneticcontrollerdialog.ui \
     UI_tools/hostdialog.ui \
     UI_tools/linkparamdialog.ui \
+    UI_tools/mndialog.ui \
     UI_tools/ryudialog.ui \
     mainwindow.ui
 

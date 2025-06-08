@@ -38,6 +38,8 @@ private slots:
     void on_actionGenetic_algorithm_triggered();
     void on_actionOpen_controller_triggered();
 
+    void on_actionOpen_mininet_script_triggered();
+
 private:
     Ui::MainWindow *ui;
     NetworkView *networkView;

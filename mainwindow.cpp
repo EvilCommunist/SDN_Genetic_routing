@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "UI_tools/geneticcontrollerdialog.h"
 #include "UI_tools/ryudialog.h"
+#include "UI_tools/mndialog.h"
 #include <QtWidgets>
 #include <QDebug>
 #include <QFileDialog>
@@ -46,6 +47,7 @@ void MainWindow::topologyTools(){
     // mini icons
     ui->actionExport_as_mininet_script->setIcon(QIcon(":/imgs/python.png"));
     ui->actionOpen_controller->setIcon(QIcon(":/imgs/python_go.png"));
+    ui->actionOpen_mininet_script->setIcon(QIcon(":/imgs/python_go.png"));
     ui->actionGenetic_algorithm->setIcon(QIcon(":/imgs/DNA.png"));
     ui->actionMetrik_data->setIcon(QIcon(":/imgs/metrics.png"));
     ui->actionDelete->setIcon(QIcon(":/imgs/del.png"));
@@ -278,4 +280,21 @@ void MainWindow::on_actionOpen_controller_triggered()
 
 void MainWindow::visualizePath(const QVector<int>& path) {
     networkView->highlightPath(path);
+}
+
+void MainWindow::on_actionOpen_mininet_script_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    "Открыть файл терминала",
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                                                    "Файлы терминала Mininet (*.py)");
+    if (filename.isEmpty()) {
+        return;
+    }
+
+    MNDialog *dialog = new MNDialog(filename, this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->setWindowModality(Qt::NonModal);
+    dialog->setFixedSize(dialog->size());
+    dialog->show();
 }
