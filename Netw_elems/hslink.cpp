@@ -7,7 +7,7 @@ HSLink::HSLink(NetNode* node1, NetNode* node2, QGraphicsItem* parent)
     : NetLink(node1, node2, parent),
       bandwidth(1.0),
       delay(1.0),
-      packetLoss(0.0),
+      packetLoss(0.01),
       state(State::Normal){
     updateToolTip();
     setNormalState();

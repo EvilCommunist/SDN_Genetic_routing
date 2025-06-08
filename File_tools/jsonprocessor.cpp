@@ -1,31 +1,36 @@
 #include "jsonprocessor.h"
 #include <QFile>
+#include<QList>
 
 bool JSONProcessor::saveJSONFile(const NetworkView* topology, const QString& filename){
     QJsonObject root;
     QJsonArray nodes;
     QJsonArray links;
 
+    QList<NetNode*> netnodes;
     for (QGraphicsItem* item : topology->getScene()->items()) {
         if (auto node = dynamic_cast<NetNode*>(item)) {
-            QJsonObject nodeObj;
-            nodeObj["type"] = static_cast<int>(node->getDeviceType());
-            nodeObj["name"] = node->getName();
-            nodeObj["x"] = node->pos().x();
-            nodeObj["y"] = node->pos().y();
-
-            if(auto controller = dynamic_cast<Controller*>(node)){
-                nodeObj["ip"] = controller->getIp();
-                nodeObj["port"] = controller->getPort();
-            }
-
-            if (auto host = dynamic_cast<Host*>(node)) {
-                nodeObj["ip"] = host->getIpAddr();
-                nodeObj["mac"] = host->getMacAddr();
-            }
-
-            nodes.append(nodeObj);
+            netnodes.prepend(node);
         }
+    }
+    for (NetNode* node : netnodes) {
+        QJsonObject nodeObj;
+        nodeObj["type"] = static_cast<int>(node->getDeviceType());
+        nodeObj["name"] = node->getName();
+        nodeObj["x"] = node->pos().x();
+        nodeObj["y"] = node->pos().y();
+
+        if(auto controller = dynamic_cast<Controller*>(node)){
+            nodeObj["ip"] = controller->getIp();
+            nodeObj["port"] = controller->getPort();
+        }
+
+        if (auto host = dynamic_cast<Host*>(node)) {
+            nodeObj["ip"] = host->getIpAddr();
+            nodeObj["mac"] = host->getMacAddr();
+        }
+
+        nodes.append(nodeObj);
     }
 
     for (QGraphicsItem* item : topology->getScene()->items()) {

@@ -1,5 +1,6 @@
 #include "networkview.h"
 #include <QMouseEvent>
+#include <QRegularExpression>
 
 NetworkView::NetworkView(QWidget *parent)
     : QGraphicsView(parent),
@@ -318,12 +319,15 @@ void NetworkView::highlightPath(const QVector<int>& path) {
     for (QGraphicsItem* item : scene->items()) {
         if (auto* sw = dynamic_cast<Switch*>(item)) {
             QString name = sw->getName();
-            if (!name.isEmpty() && name.back().isDigit()) {
-                bool ok;
-                int switchNumber = name.right(1).toInt(&ok);
-                if (ok && path.contains(switchNumber)) {
-                    pathSwitches.append(sw);
-                    sw->setSelected(true);
+            if (!name.isEmpty()) {
+                QRegularExpressionMatch match = QRegularExpression("(\\d+)$").match(name);
+                if (match.hasMatch()) {
+                    bool ok;
+                    int switchNumber = match.captured(1).toInt(&ok);
+                    if (ok && path.contains(switchNumber)) {
+                        pathSwitches.append(sw);
+                        sw->setSelected(true);
+                    }
                 }
             }
         }
