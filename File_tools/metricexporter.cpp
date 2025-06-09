@@ -2,6 +2,7 @@
 #include <QStringBuilder>
 #include <QTextStream>
 #include "../Netw_elems/switch.h"
+#include "../Netw_elems/host.h"
 
 bool metricExporter::saveMetric(const QString& metrics, const QString& filename){
     QFile metricsFile(filename);
@@ -50,8 +51,20 @@ QString metricExporter::exportMetrics(const QList<NetNode*>& nodes, const QList<
     }
     result += "\n";
 
+    auto portMatrix = generatePortMatrix(nodes, links);
+    result += "Port Matrix (%):\n";
+    for (const auto& row : portMatrix) {
+        for (int val : row) {
+            result += QString::number(val) + " ";
+        }
+        result += "\n";
+    }
+    result += "\n";
+
     result += "Switch-Host Metrics:\n";
     result += generateSwitchHostMetrics(nodes, links);
+    result += "\nSwitch-Host Ports:\n";
+    result += generateSwitchHostPorts(nodes, links);
 
     return result;
 }
@@ -96,6 +109,39 @@ QVector<QVector<float>> metricExporter::generateAdjacencyMatrix(const QList<NetN
     return matrix_reversed;
 }
 
+QVector<QVector<int>> metricExporter::generatePortMatrix(const QList<NetNode*>& nodes,
+                                                           const QList<NetLink*>& links)
+{
+    QList<Switch*> switches;
+        for(auto node : nodes) {
+            if(auto sw = dynamic_cast<Switch*>(node))
+                switches.prepend(sw);
+        }
+
+        int size = switches.size();
+        QVector<QVector<int>> matrix(size, QVector<int>(size, 0));
+
+        QMap<NetNode*, int> switchIndex;
+        for (int i = 0; i < size; ++i) {
+            switchIndex[switches[i]] = i;
+        }
+
+        for (NetLink* link : links) {
+            NetNode* node1 = link->getNode1();
+            NetNode* node2 = link->getNode2();
+
+            if (node1->getDeviceType() == SWITCH && node2->getDeviceType() == SWITCH) {
+                int i = switchIndex[node1];
+                int j = switchIndex[node2];
+
+                matrix[i][j] = link->getPortNode1();
+                matrix[j][i] = link->getPortNode2();
+            }
+        }
+
+        return matrix;
+}
+
 QString metricExporter::generateSwitchHostMetrics(const QList<NetNode*>& nodes, const QList<NetLink*>& links)
 {
     QString result;
@@ -115,6 +161,30 @@ QString metricExporter::generateSwitchHostMetrics(const QList<NetNode*>& nodes, 
                                                     .arg(getLinkMetric(link, DELAY))
                                                     .arg(getLinkMetric(link, BANDWIDTH))
                                                     .arg(getLinkMetric(link, PACKET_LOSS));
+        }
+    }
+
+    return result;
+}
+
+QString metricExporter::generateSwitchHostPorts(const QList<NetNode*>& nodes, const QList<NetLink*>& links)
+{
+    QString result;
+
+    for (NetLink* link : links) {
+        NetNode* node1 = link->getNode1();
+        NetNode* node2 = link->getNode2();
+        bool isSwitchHost = (node1->getDeviceType() == SWITCH && node2->getDeviceType() == HOST) ||
+                           (node1->getDeviceType() == HOST && node2->getDeviceType() == SWITCH);
+
+        if (isSwitchHost) {
+            QString node1Name = node1->getName();
+            QString node2Name = node2->getName();
+
+            result += QString("%1-%2: %3, %4\n").arg(node1Name)
+                                                .arg(node2Name)
+                                                .arg(link->getPortNode1())
+                                                .arg(link->getPortNode2());
         }
     }
 

@@ -114,7 +114,7 @@ void MainWindow::on_actionSave_as_triggered()
     openedProjectPath = filename;
     QFileInfo fileInfo(filename);
     QString fileName = fileInfo.fileName();
-    setWindowTitle(windowTitle() + " ["+fileName+"]");
+    setWindowTitle("G_SDN ["+fileName+"]");
 }
 
 void MainWindow::on_actionOpen_triggered()

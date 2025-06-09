@@ -22,8 +22,11 @@ private:
     static QVector<QVector<float>> generateAdjacencyMatrix(const QList<NetNode*>& nodes,
                                                            const QList<NetLink*>& links,
                                                            MetricType metricType);
+    static QVector<QVector<int>> generatePortMatrix(const QList<NetNode*>& nodes,
+                                                      const QList<NetLink*>& links);
 
     static QString generateSwitchHostMetrics(const QList<NetNode*>& nodes, const QList<NetLink*>& links);
+    static QString generateSwitchHostPorts(const QList<NetNode*>& nodes, const QList<NetLink*>& links);
 
     static float getLinkMetric(NetLink* link, MetricType metricType);
 };

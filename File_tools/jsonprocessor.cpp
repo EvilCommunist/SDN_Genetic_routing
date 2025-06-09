@@ -33,26 +33,30 @@ bool JSONProcessor::saveJSONFile(const NetworkView* topology, const QString& fil
         nodes.append(nodeObj);
     }
 
+    QList<NetLink*> netlinks;
     for (QGraphicsItem* item : topology->getScene()->items()) {
         if (auto link = dynamic_cast<NetLink*>(item)) {
-            QJsonObject linkObj;
-            linkObj["from"] = link->getNode1()->getName();
-            linkObj["to"] = link->getNode2()->getName();
-
-            if (auto paramLink = dynamic_cast<SSLink*>(link)) {
-                linkObj["bandwidth"] = paramLink->getBandwidth();
-                linkObj["delay"] = paramLink->getDelay();
-                linkObj["loss"] = paramLink->getPacketLoss();
-            }
-
-            if (auto paramLink = dynamic_cast<HSLink*>(link)) {
-                linkObj["bandwidth"] = paramLink->getBandwidth();
-                linkObj["delay"] = paramLink->getDelay();
-                linkObj["loss"] = paramLink->getPacketLoss();
-            }
-
-            links.append(linkObj);
+            netlinks.prepend(link);
         }
+    }
+    for (NetLink* link : netlinks) {
+        QJsonObject linkObj;
+        linkObj["from"] = link->getNode1()->getName();
+        linkObj["to"] = link->getNode2()->getName();
+
+        if (auto paramLink = dynamic_cast<SSLink*>(link)) {
+            linkObj["bandwidth"] = paramLink->getBandwidth();
+            linkObj["delay"] = paramLink->getDelay();
+            linkObj["loss"] = paramLink->getPacketLoss();
+        }
+
+        if (auto paramLink = dynamic_cast<HSLink*>(link)) {
+            linkObj["bandwidth"] = paramLink->getBandwidth();
+            linkObj["delay"] = paramLink->getDelay();
+            linkObj["loss"] = paramLink->getPacketLoss();
+        }
+
+        links.append(linkObj);
     }
 
     root["nodes"] = nodes;

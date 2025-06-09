@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     QObject::connect(&listener, SIGNAL(pathReceived(QVector<int>)), &w, SLOT(visualizePath(QVector<int>)));
 
     w.setWindowTitle("G_SDN");
+    w.setWindowIcon(QIcon(":/imgs/DNA.png"));
     w.show();
     listener.on();
     return a.exec();
