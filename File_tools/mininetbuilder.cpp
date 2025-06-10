@@ -25,11 +25,15 @@ QString mininetBuilder::generateMininetScript(const QList<NetNode*>& nodes,
                                             const QString& controllerIp,
                                             int controllerPort)
 {
+    QList<NetNode*> nodesRealOrder;
+    for(NetNode* node : nodes){
+        nodesRealOrder.prepend(node);
+    }
     QString script;
     script += generatePrefix();
     script += generateControllers(controllerIp, controllerPort);
-    script += generateHosts(nodes);
-    script += generateSwitches(nodes);
+    script += generateHosts(nodesRealOrder);
+    script += generateSwitches(nodesRealOrder);
     script += generateLinks(links);
     script += generateAppendix();
     return script;
@@ -58,10 +62,12 @@ QString mininetBuilder::generateControllers(const QString& ip, int port)
 
 QString mininetBuilder::generateSwitches(const QList<NetNode*>& nodes)
 {
-    QString switches;
+    QString switches = "    switches = []\n";
     for (NetNode* node : nodes) {
-        if(auto sw = dynamic_cast<Switch*>(node))
+        if(auto sw = dynamic_cast<Switch*>(node)){
             switches += QString("    %1 = net.addSwitch('%1')\n").arg(nodeToMininetName(node));
+            switches += QString("    switches.append(%1)\n").arg(nodeToMininetName(node));
+        }
     }
     return switches + "\n";
 }
@@ -114,7 +120,7 @@ QString mininetBuilder::generateAppendix()
 {
     return R"(
     c0.start()
-    for sw in net.switches:
+    for sw in switches:
         sw.start([c0])
 
     net.build()
