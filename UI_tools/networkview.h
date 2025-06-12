@@ -31,6 +31,7 @@ public slots:
     void setEditMode();
     void deleteSelectedItems();
     void highlightPath(const QVector<int>& path);
+    void highlightPaths(const QVector<QVector<int>>& paths);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

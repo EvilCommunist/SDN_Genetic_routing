@@ -282,6 +282,10 @@ void MainWindow::visualizePath(const QVector<int>& path) {
     networkView->highlightPath(path);
 }
 
+void MainWindow::visualizePaths(const QVector<QVector<int>>& paths) {
+    networkView->highlightPaths(paths);
+}
+
 void MainWindow::on_actionOpen_mininet_script_triggered()
 {
     QString filename = QFileDialog::getOpenFileName(this,

@@ -29,11 +29,20 @@ void geneticControllerDialog::accept(){
         filename += ".py";
     }
 
-    QString script = GeneticControllerGenerator::generateGeneticAlgorithmScript(ui->POP_SIZE->text().toInt(),
-                                                                                ui->P_CROSSOVER->text().toDouble()/100,
-                                                                                ui->P_MUTATION->text().toDouble()/100,
-                                                                                ui->MAX_GEN->text().toInt(),
-                                                                                ui->EARLY_STOP->text().toInt());
+    QString script = "";
+    if (ui->one_to_one->isChecked()){
+        script = GeneticControllerGenerator::generateGeneticAlgorithmScript(ui->POP_SIZE->text().toInt(),
+                                                                            ui->P_CROSSOVER->text().toDouble()/100,
+                                                                            ui->P_MUTATION->text().toDouble()/100,
+                                                                            ui->MAX_GEN->text().toInt(),
+                                                                            ui->EARLY_STOP->text().toInt());
+    }else{
+        script = GeneticControllerGenerator::generateGeneticAlgorithmScriptOneToAll(ui->POP_SIZE->text().toInt(),
+                                                                                    ui->P_CROSSOVER->text().toDouble()/100,
+                                                                                    ui->P_MUTATION->text().toDouble()/100,
+                                                                                    ui->MAX_GEN->text().toInt(),
+                                                                                    ui->EARLY_STOP->text().toInt());
+    }
 
     bool ok = GeneticControllerGenerator::saveScript(script, filename);
 

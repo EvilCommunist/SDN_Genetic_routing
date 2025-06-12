@@ -16,6 +16,7 @@ public slots:
 
 signals:
     void pathReceived(QVector<int> path);
+    void pathsReceived(QVector<QVector<int>> paths);
 };
 
 #endif // LISTENER_H

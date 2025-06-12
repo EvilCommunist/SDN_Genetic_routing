@@ -43,6 +43,7 @@ SOURCES += \
     UI_tools/networkview.cpp \
     tcp/listener.cpp \
     tcp/pathgetter.cpp \
+    tcp/pathsgetter.cpp \
     tcp/tcpserver.cpp
 
 HEADERS += \
@@ -69,6 +70,7 @@ HEADERS += \
     UI_tools/networkview.h \
     tcp/listener.h \
     tcp/pathgetter.h \
+    tcp/pathsgetter.h \
     tcp/tcpserver.h
 
 FORMS += \

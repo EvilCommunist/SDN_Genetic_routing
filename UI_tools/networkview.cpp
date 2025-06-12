@@ -355,6 +355,54 @@ void NetworkView::highlightPath(const QVector<int>& path) {
     }
 }
 
+void NetworkView::highlightPaths(const QVector<QVector<int>>& paths) {
+    clearPath();
+
+    int colorGenerator = 1;
+    foreach(auto path, paths){
+        float hue = (360.0f * colorGenerator++) / paths.size();
+        QColor color = QColor::fromHslF(hue / 360.0f, 0.8f, 0.6f);
+        QMap<int, Switch*> switchesMap;
+        for (QGraphicsItem* item : scene->items()) {
+            if (auto* sw = dynamic_cast<Switch*>(item)) {
+                QString name = sw->getName();
+                QRegularExpressionMatch match = QRegularExpression("(\\d+)$").match(name);
+                if (match.hasMatch()) {
+                    bool ok;
+                    int switchNumber = match.captured(1).toInt(&ok);
+                    if (ok && path.contains(switchNumber)) {
+                        switchesMap[switchNumber] = sw;
+                    }
+                }
+            }
+        }
+
+        QList<Switch*> pathSwitches;
+        for (int switchNumber : path) {
+            if (switchesMap.contains(switchNumber)) {
+                pathSwitches.append(switchesMap[switchNumber]);
+            }
+        }
+
+        for (int i = 0; i < pathSwitches.size() - 1; ++i) {
+            Switch* current = pathSwitches[i];
+            Switch* next = pathSwitches[i + 1];
+
+            for (QGraphicsItem* item : scene->items()) {
+                if (auto* link = dynamic_cast<SSLink*>(item)) {
+                    NetNode* node1 = link->getNode1();
+                    NetNode* node2 = link->getNode2();
+
+                    if ((node1 == current && node2 == next) ||
+                        (node1 == next && node2 == current)) {
+                        link->setIncludedInPathState(color);
+                    }
+                }
+            }
+        }
+    }
+}
+
 void NetworkView::clearPath()
 {
     for (QGraphicsItem* item : scene->items()) {

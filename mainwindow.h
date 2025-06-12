@@ -22,6 +22,7 @@ public:
 
 public slots:
     void visualizePath(const QVector<int>& path);
+    void visualizePaths(const QVector<QVector<int>>& paths);
 
 private slots:
     void on_actionController_triggered();

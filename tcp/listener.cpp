@@ -1,5 +1,6 @@
 #include "listener.h"
 #include "pathgetter.h"
+#include "pathsgetter.h"
 
 
 void Listener::on()
@@ -22,5 +23,11 @@ void Listener::handleCommand(QByteArray data)
         PathGetter getter;
         QVector<int> path = getter.get(commandArgs[body]);
         emit pathReceived(path);
+    }
+    if (QString::compare(commandArgs[name], QString("Paths")) == 0)
+    {
+        PathsGetter getter;
+        QVector<QVector<int>> paths = getter.get(commandArgs[body]);
+        emit pathsReceived(paths);
     }
 }

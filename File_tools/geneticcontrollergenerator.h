@@ -14,6 +14,13 @@ public:
         int maxGenerations,
         int earlyStopGen);
 
+    static QString generateGeneticAlgorithmScriptOneToAll(
+        int populationSize,
+        double crossoverProbability,
+        double mutationRate,
+        int maxGenerations,
+        int earlyStopGen);
+
     static bool saveScript(const QString& script, const QString& filename);
 };
 
