@@ -32,6 +32,7 @@ public slots:
     void deleteSelectedItems();
     void highlightPath(const QVector<int>& path);
     void highlightPaths(const QVector<QVector<int>>& paths);
+    void changeMetricsVisibility(bool isVisible);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

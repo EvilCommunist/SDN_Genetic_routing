@@ -104,10 +104,17 @@
     <addaction name="actionOpen_controller"/>
     <addaction name="actionOpen_mininet_script"/>
    </widget>
+   <widget class="QMenu" name="menuOptions">
+    <property name="title">
+     <string>Options</string>
+    </property>
+    <addaction name="actionShow_metrics"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuExport"/>
    <addaction name="menuTools"/>
    <addaction name="menuAlgorithms"/>
+   <addaction name="menuOptions"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionGenetic_algorithm">
@@ -288,6 +295,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+M</string>
+   </property>
+  </action>
+  <action name="actionShow_metrics">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show metrics</string>
    </property>
   </action>
  </widget>

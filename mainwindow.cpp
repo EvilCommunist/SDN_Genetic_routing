@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
             networkView, &NetworkView::setEditMode);
     connect(ui->actionDelete, &QAction::triggered,
             networkView, &NetworkView::deleteSelectedItems);
+    connect(this, SIGNAL(signalChangeMetricsVisibility(bool)),
+            networkView, SLOT(changeMetricsVisibility(bool)));
 
     topologyTools();
 }
@@ -301,4 +303,9 @@ void MainWindow::on_actionOpen_mininet_script_triggered()
     dialog->setWindowModality(Qt::NonModal);
     dialog->setFixedSize(dialog->size());
     dialog->show();
+}
+
+void MainWindow::on_actionShow_metrics_triggered()
+{
+    emit signalChangeMetricsVisibility(ui->actionShow_metrics->isChecked());
 }

@@ -25,6 +25,7 @@ public:
 
     void setNormalState();
     void setSelectedState();
+    void setMetricsState();
 
 private:
     void updateToolTip();
@@ -33,7 +34,7 @@ private:
     float delay;
     float packetLoss;
 
-    enum class State { Normal, Selected };
+    enum class State { Normal, Selected, Normal_Metrics };
     State state;
 };
 

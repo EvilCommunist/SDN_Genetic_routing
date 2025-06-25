@@ -309,6 +309,28 @@ NetLink* NetworkView::loadLink(NetNode* n1, NetNode* n2){
     return createLink(n1, n2);
 }
 
+void NetworkView::changeMetricsVisibility(bool isVisible){
+    if(isVisible){
+        for (QGraphicsItem* item : scene->items()) {
+            if (auto* link = dynamic_cast<SSLink*>(item)) {
+                link->setMetricsState();
+            }
+            if (auto* link = dynamic_cast<HSLink*>(item)) {
+                link->setMetricsState();
+            }
+        }
+    }else{
+        for (QGraphicsItem* item : scene->items()) {
+            if (auto* link = dynamic_cast<SSLink*>(item)) {
+                link->setNormalState();
+            }
+            if (auto* link = dynamic_cast<HSLink*>(item)) {
+                link->setNormalState();
+            }
+        }
+    }
+}
+
 
 // web functions
 

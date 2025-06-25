@@ -41,6 +41,8 @@ private slots:
 
     void on_actionOpen_mininet_script_triggered();
 
+    void on_actionShow_metrics_triggered();
+
 private:
     Ui::MainWindow *ui;
     NetworkView *networkView;
@@ -65,5 +67,6 @@ signals:
     void signalPrepareSwitch();
     void signalPrepareLink();
     void signalChangeStateToEdit();
+    void signalChangeMetricsVisibility(bool isVisible);
 };
 #endif // MAINWINDOW_H

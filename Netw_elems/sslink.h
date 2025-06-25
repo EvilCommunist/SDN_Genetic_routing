@@ -27,6 +27,7 @@ public:
     void setSelectedState();
     void setIncludedInPathState(QColor color);
     void setIncludedInPathsState(QColor color);
+    void setMetricsState();
 
 private:
     void updateToolTip();
@@ -35,7 +36,7 @@ private:
     float delay;
     float packetLoss;
 
-    enum class State { Normal, Selected, InPath, InPaths };
+    enum class State { Normal, Selected, InPath, InPaths, Normal_Metrics };
     State state;
     QColor pathColor;
 };

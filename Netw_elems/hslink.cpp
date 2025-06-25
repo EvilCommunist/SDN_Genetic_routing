@@ -41,6 +41,18 @@ void HSLink::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
         painter->setBrush(Qt::white);
         painter->drawRect(textRect.adjusted(-5, -5, 5, 5));
         painter->drawText(textRect, Qt::AlignCenter, metrics);
+    } else if(state == State::Normal_Metrics){
+        QString metrics = QString("BW: %1 Mbps\nDelay: %2 ms\nLoss: %3%")
+                         .arg(bandwidth).arg(delay).arg(packetLoss*100);
+        QFontMetrics fm(painter->font());
+        QRect textRect = fm.boundingRect(QRect(), Qt::AlignCenter, metrics);
+        QPointF center = (line().p1() + line().p2()) / 2;
+        textRect.moveCenter(center.toPoint());
+
+        painter->setPen(Qt::black);
+        painter->setBrush(Qt::white);
+        painter->drawRect(textRect.adjusted(-5, -5, 5, 5));
+        painter->drawText(textRect, Qt::AlignCenter, metrics);
     }
 }
 
@@ -59,6 +71,12 @@ void HSLink::setNormalState(){
 
 void HSLink::setSelectedState(){
     state = State::Selected;
+    update();
+}
+
+
+void HSLink::setMetricsState(){
+    state = State::Normal_Metrics;
     update();
 }
 
