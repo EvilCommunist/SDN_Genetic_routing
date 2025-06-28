@@ -46,6 +46,7 @@ private:
     int controllerCounter = 0;
     int switchCounter = 0;
     NetNode *firstLinkNode = nullptr;
+    bool metricsVisible = false;
 
     void clear();
 

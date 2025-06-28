@@ -112,8 +112,11 @@ void NetworkView::deleteSelectedItems()
             NetNode* to = link->getNode2();
 
             if (selectedItems.contains(from) || selectedItems.contains(to)) {
+                if(selectedItems.contains(link))
+                    selectedItems.removeAll(link);
                 scene->removeItem(link);
                 delete link;
+                link = nullptr;
             }
         }
     }
@@ -241,6 +244,11 @@ NetLink* NetworkView::createLink(NetNode *from, NetNode *to)
     }
 
     if (link) {
+        if(auto ln = dynamic_cast<SSLink*>(link)){
+            if(metricsVisible){
+                ln->setMetricsState();
+            }
+        }
         scene->addItem(link);
         from->addLink(link);
         to->addLink(link);
@@ -310,6 +318,7 @@ NetLink* NetworkView::loadLink(NetNode* n1, NetNode* n2){
 }
 
 void NetworkView::changeMetricsVisibility(bool isVisible){
+    metricsVisible = isVisible;
     if(isVisible){
         for (QGraphicsItem* item : scene->items()) {
             if (auto* link = dynamic_cast<SSLink*>(item)) {
@@ -380,10 +389,11 @@ void NetworkView::highlightPath(const QVector<int>& path) {
 void NetworkView::highlightPaths(const QVector<QVector<int>>& paths) {
     clearPath();
 
-    int colorGenerator = 1;
+    //int colorGenerator = 1;
     foreach(auto path, paths){
-        float hue = (360.0f * colorGenerator++) / paths.size();
-        QColor color = QColor::fromHslF(hue / 360.0f, 0.8f, 0.6f);
+        //float hue = (360.0f * colorGenerator++) / paths.size();
+        //QColor color = QColor::fromHslF(hue / 360.0f, 0.8f, 0.6f);
+        QColor color = Qt::red;
         QMap<int, Switch*> switchesMap;
         for (QGraphicsItem* item : scene->items()) {
             if (auto* sw = dynamic_cast<Switch*>(item)) {
