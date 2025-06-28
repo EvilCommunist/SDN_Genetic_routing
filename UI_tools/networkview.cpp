@@ -116,7 +116,6 @@ void NetworkView::deleteSelectedItems()
                     selectedItems.removeAll(link);
                 scene->removeItem(link);
                 delete link;
-                link = nullptr;
             }
         }
     }
@@ -245,6 +244,10 @@ NetLink* NetworkView::createLink(NetNode *from, NetNode *to)
 
     if (link) {
         if(auto ln = dynamic_cast<SSLink*>(link)){
+            if(metricsVisible){
+                ln->setMetricsState();
+            }
+        } else if (auto ln = dynamic_cast<HSLink*>(link)){
             if(metricsVisible){
                 ln->setMetricsState();
             }
